@@ -1,0 +1,101 @@
+body{
+  color: #FFFFFF;
+  font-family: 'Lato', sans-serif;
+}
+
+h1, h2, h3{
+  font-weight: 700;
+  text-align: center;
+}
+
+p{
+  font-weight: 400;
+  text-align: center;
+}
+
+#search-bar{
+
+}
+
+.navbar-brand{
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 30px;
+}
+
+.navbar img{
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  transition: filter 0.3s ease;
+  filter: grayscale(100%);
+}
+
+.navbar img:hover{
+  filter: grayscale(0%);
+}
+
+.navbar a{
+  padding-top:0px;
+}
+.full-content{
+  margin:0px;
+}
+
+#leftPanel{
+  background-color: #810E13;
+  height: 1000px;
+}
+
+#leftHeader{
+  background-color: #3F0104;
+}
+
+.leftProfile {
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  display: block;
+  margin: auto;
+}
+
+.leftRow{
+  padding-top: 1em;
+  padding-bottom: 1em;
+  transition: background-color 0.3s ease;
+}
+
+.leftRow:hover{
+  background-color: #8c5557;
+}
+
+#rightPanel{
+  background-color: #BBD1CE;
+  height: 1000px;
+  color: #000000;
+}
+
+#rightHeader{
+  font-family: 'Lato', sans-serif;
+  background-color: #313737;
+  color: #FFFFFF;
+}
+
+.rightBox{
+  padding: 1em;
+  transition: background-color 0.3s ease;
+}
+
+.rightBox:hover{
+  background-color: #d7efec;
+}
+
+.rightProfile {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  display: block;
+  margin: auto;
+}
