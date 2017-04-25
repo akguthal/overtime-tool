@@ -1,3 +1,4 @@
+/* mysql.exe -u root overtime < "file location" */
 drop table if exists studentAthlete;
 drop table if exists recruiter;
 drop table if exists studentRecruiterConnection;
@@ -24,13 +25,13 @@ insert into recruiterRecruiterConnection(recruiterEmail1, recruiterEmail2, statu
 insert into recruiterRecruiterConnection(recruiterEmail1, recruiterEmail2, status) values("johnsmith@gmail.com", "janedoe@aol.com", "pending");
 
 /*Create a view for the established connections:*/
-create view connected as select studentEmail, recruiterEmail from studentRecruiterConnection where status = 'connected';
+/*create view connected as select studentEmail, recruiterEmail from studentRecruiterConnection where status = 'connected';*/
 
 /*Get the recruiters a student is connected to: */
---select * from recruiter where email in (select recruiterEmail from connected 	where studentEmail = [student email]);
+/*select * from recruiter where email in (select recruiterEmail from connected 	where studentEmail = [student email]);*/
 
 /*Get the students a recruiter is connected to:*/
---select * from studentAthlete where email in (select studentEmail from connected where recruiterEmail = [recruiter email]);
+/*select * from studentAthlete where email in (select studentEmail from connected where recruiterEmail = [recruiter email]);*/
 
 /*	Field- 30
 	School- 20		8
@@ -46,16 +47,22 @@ create view connected as select studentEmail, recruiterEmail from studentRecruit
 		Criminal Justice
 		Education
 		Engineering
+        Math
+        Computer Science
+        
 		
 	Fields
 		PR- Business, Communication
 		Marketing- Business, Communication
 		Finance- Business
 		Sales- Business, Communication
-		Teacher- Education
-		
+		Teacher- Education, Math, History
+		Software Engineer- Computer Science
+        Engineer- Engineering
 		Athletic Trainer- Sport Science
 		Personal Trainer- Sport Science
+        Guidance Counselor- Sociology
+        Police- Criminal Justice
 */
 
 
