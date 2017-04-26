@@ -58,8 +58,6 @@ $body = <<<ENDOFDATA
 
                 <label>Name</label>
                 <input type="text" class="form-control" name="name" id="name" value="{$_SESSION['name']}" />
-                <label>Email</label>
-                <input type="text" class="form-control" name="name" id="email" value="{$_SESSION['email']}" />
                 <label>Year</label><br/>
                 <label class="radio-inline"><input type= radio name="year" value="freshman">Freshman</label>
                 <label class="radio-inline"><input type= radio name="year" value="sophomore">Sophomore</label>
