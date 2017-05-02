@@ -1,4 +1,5 @@
 /* mysql.exe -u root overtime < "file location" */
+grant all on overtime.* to dbuser@localhost identified by 'password';
 drop table if exists studentAthlete;
 drop table if exists recruiter;
 drop table if exists studentRecruiterConnection;
