@@ -1,6 +1,22 @@
 
 <?php
 session_start();
+print_r($_SESSION);
+if(isset($_POST["submit"])) {
+    echo("yep");
+    $_SESSION["name"] = $_POST["name"];
+    $_SESSION["year"] = $_POST["year"];
+    $_SESSION["major"] = $_POST["major"];
+    $_SESSION["sport"] = $_POST["sport"];
+    $_SESSION["interests"] = $_POST["interests"];
+    $_SESSION["newProfile"] = "new";
+    $_SESSION["studentProfile"] = "student";
+    header("Location: storeInDatabase.php");
+} else {
+    echo("nope");
+}
+/* <link rel="stylesheet" type="text/css" href="profileStyle.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">*/
 
 $body = <<<ENDOFDATA
 <!DOCTYPE html>
@@ -10,8 +26,6 @@ $body = <<<ENDOFDATA
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="upload.js" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="profileStyle.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -25,7 +39,7 @@ $body = <<<ENDOFDATA
     <nav class="navbar-inverse navbar-static-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <img class="logo-img" src="OTLogo2.png" width="120" height="50" align="top">
+                <img class="logo-img" src="img/OTLogo2.png" width="120" height="50" align="top">
 
             </div>
             <ul class="nav navbar-nav">
@@ -57,20 +71,22 @@ $body = <<<ENDOFDATA
             <div class="info" >
 
                 <label>Name</label>
-                <input type="text" class="form-control" name="name" id="name" value="{$_SESSION['name']}" />
-                <label>Year</label><br/>
-                <label class="radio-inline"><input type= radio name="year" value="freshman">Freshman</label>
-                <label class="radio-inline"><input type= radio name="year" value="sophomore">Sophomore</label>
-                <label class="radio-inline"><input type= radio name="year" value="junior">Junior</label>
-                <label class="radio-inline"><input type= radio name="year" value="senior">Senior</label><br/>
-                <label>Major</label>
-                <input type="text" class="form-control" name="major" id="major" />
-                <label>Sport</label>
-                <input type="text" class="form-control" name="sport" id="sport" />
-                <label>Interests</label>
-                <input type="text" class="form-control" name="interests" id="interests" />
-                <br/>
-                <input type="submit" class="form-control" value="SAVE" name="submit" align="right" id="save">
+                <form action="studentProfile.php" method = "post">
+                    <input type="text" class="form-control" name="name" id="name" value="{$_SESSION['name']}" />
+                    <label>Year</label><br/>
+                    <label class="radio-inline"><input type= radio name="year" value="freshman">Freshman</label>
+                    <label class="radio-inline"><input type= radio name="year" value="sophomore">Sophomore</label>
+                    <label class="radio-inline"><input type= radio name="year" value="junior">Junior</label>
+                    <label class="radio-inline"><input type= radio name="year" value="senior">Senior</label><br/>
+                    <label>Major</label>
+                    <input type="text" class="form-control" name="major" id="major" />
+                    <label>Sport</label>
+                    <input type="text" class="form-control" name="sport" id="sport" />
+                    <label>Interests</label>
+                    <input type="text" class="form-control" name="interests" id="interests" />
+                    <br/>
+                    <input type="submit" class="form-control" value="SAVE" name="submit" align="right" id="save">
+                </form>
             </div>
 
 
@@ -84,4 +100,6 @@ $body = <<<ENDOFDATA
 </html>
 ENDOFDATA;
 echo ($body);
-session_destroy();
+
+
+//session_destroy();
