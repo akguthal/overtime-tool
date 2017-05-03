@@ -55,7 +55,7 @@ $body = <<<ENDOFDATA
         </div>
         <div class="col-sm-5" >
             <div class="info" >
-
+                <form action = "{$_SERVER['PHP_SELF']}" method = "post"
                 <label>Name</label>
                 <input type="text" class="form-control" name="name" id="name" value="{$_SESSION['name']}" />
                 <br/>
@@ -109,7 +109,7 @@ $body = <<<ENDOFDATA
                 <br/>
                 <input type="submit" class="form-control" value="SAVE" name="submit" align="right" id="save">
             </div>
-
+            </form>
 
         </div>
 
@@ -121,4 +121,16 @@ $body = <<<ENDOFDATA
 </html>
 ENDOFDATA;
 echo ($body);
-session_destroy();
+if(isset($_POST["submit"])) {
+    echo("yep");
+
+    $_SESSION["year"] = $_POST["year"];
+    $_SESSION["major"] = $_POST["major"];
+    $_SESSION["sport"] = $_POST["sport"];
+    $_SESSION["school"] = $_POST["school"];
+    $_SESSION["newProfile"] = "new";
+    $_SESSION["studentProfile"] = "student";
+    header("Location: storeInDatabase.php");
+} else {
+    echo("nope");
+}
