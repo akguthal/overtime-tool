@@ -1,22 +1,6 @@
 
 <?php
 session_start();
-print_r($_SESSION);
-if(isset($_POST["submit"])) {
-    echo("yep");
-    $_SESSION["name"] = $_POST["name"];
-    $_SESSION["year"] = $_POST["year"];
-    $_SESSION["major"] = $_POST["major"];
-    $_SESSION["sport"] = $_POST["sport"];
-    $_SESSION["interests"] = $_POST["interests"];
-    $_SESSION["newProfile"] = "new";
-    $_SESSION["studentProfile"] = "student";
-    header("Location: storeInDatabase.php");
-} else {
-    echo("nope");
-}
-/* <link rel="stylesheet" type="text/css" href="profileStyle.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">*/
 
 $body = <<<ENDOFDATA
 <!DOCTYPE html>
@@ -26,6 +10,8 @@ $body = <<<ENDOFDATA
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="upload.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="css/profileStyle.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -71,22 +57,57 @@ $body = <<<ENDOFDATA
             <div class="info" >
 
                 <label>Name</label>
-                <form action="studentProfile.php" method = "post">
-                    <input type="text" class="form-control" name="name" id="name" value="{$_SESSION['name']}" />
-                    <label>Year</label><br/>
-                    <label class="radio-inline"><input type= radio name="year" value="freshman">Freshman</label>
-                    <label class="radio-inline"><input type= radio name="year" value="sophomore">Sophomore</label>
-                    <label class="radio-inline"><input type= radio name="year" value="junior">Junior</label>
-                    <label class="radio-inline"><input type= radio name="year" value="senior">Senior</label><br/>
-                    <label>Major</label>
-                    <input type="text" class="form-control" name="major" id="major" />
-                    <label>Sport</label>
-                    <input type="text" class="form-control" name="sport" id="sport" />
-                    <label>Interests</label>
-                    <input type="text" class="form-control" name="interests" id="interests" />
-                    <br/>
-                    <input type="submit" class="form-control" value="SAVE" name="submit" align="right" id="save">
-                </form>
+                <input type="text" class="form-control" name="name" id="name" value="{$_SESSION['name']}" />
+                <br/>
+                <label>University</label>
+                <select name="school" size="5" class="form-control">
+                    <option value="Michigan">University of Michigan</option>
+                    <option value="Northwestern">Northwestern University</option>
+                    <option value="Wisconsin">Wisconsin University</option>
+                    <option value="Illinois">University of Illinois</option>
+                    <option value="PennState">Penn State University</option>
+                    <option value="Ohio"> Ohio State University</option>
+                    <option value="MichiganState">Michigan State University </option>
+                    <option value="Purdue">Purdue University</option>
+                    <option value="Minnesota">University of Minnesota</option>
+                    <option value="Indiana">Indiana University</option>
+                </select>
+                <br/>
+                <label>Major</label>
+                <select name="major" size="5" class="form-control">
+                    <option value="Business">Business</option>
+                    <option value="Sociology">Sociology</option>
+                    <option value="Communication">Communication</option>
+                    <option value="History">History</option>
+                    <option value="Sports Science">Sports Science</option>
+                    <option value="Criminal Justice">Criminal Justice</option>
+                    <option value="Education">Education</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Math">Math</option>
+                    <option value="Computer Science">Computer Science</option>
+                </select>
+                <br/>
+                <label>Year</label><br/>
+                <label class="radio-inline"><input type= radio name="year" value="freshman">Freshman</label>
+                <label class="radio-inline"><input type= radio name="year" value="sophomore">Sophomore</label>
+                <label class="radio-inline"><input type= radio name="year" value="junior">Junior</label>
+                <label class="radio-inline"><input type= radio name="year" value="senior">Senior</label><br/>
+                <br/>
+                <label>Sport</label>
+                 <select name="sport" size="5" class="form-control">
+                    <option value="Basketball">Basketball</option>
+                    <option value="Baseball">Baseball</option>
+                    <option value="Badminton">Badminton</option>
+                    <option value="Football">Football</option>
+                    <option value="Golf">Golf</option>
+                    <option value="Lacrosse">Lacrosse</option>
+                    <option value="Soccer">Soccer</option>
+                    <option value="Softball">Softball</option>
+                    <option value="Tennis">Tennis</option>
+                    <option value="Volleyball">Volleyball</option>
+                </select>
+                <br/>
+                <input type="submit" class="form-control" value="SAVE" name="submit" align="right" id="save">
             </div>
 
 
@@ -100,6 +121,4 @@ $body = <<<ENDOFDATA
 </html>
 ENDOFDATA;
 echo ($body);
-
-
-//session_destroy();
+session_destroy();
