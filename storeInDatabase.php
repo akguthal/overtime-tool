@@ -20,7 +20,7 @@
         $year = $_SESSION["year"];
         $major = $_SESSION["major"];
         $sport = $_SESSION["sport"];
-        $interests = $_SESSION["interests"];
+        $school = $_SESSION["school"];
         $password = $_SESSION["psw"];
         if($year == "freshman") {
             $year = 1;
@@ -29,8 +29,8 @@
         } elseif($year == "junior") {
             $year = 3;
         } else $year = 4;
-        $sqlQuery = sprintf("insert into $table (name, email, yearsInSchool, major, sport, password) values ('%s', '%s', '%s', '%s', '%s', '%s')", 
-				$name, $email, $year, $major, $sport, $password);
+        $sqlQuery = sprintf("insert into $table (name, email, school, yearsInSchool, major, sport, password) values ('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+				$name, $email, $school, $year, $major, $sport, $password);
         
         $result = $db_connection->query($sqlQuery);
 		
