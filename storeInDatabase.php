@@ -31,7 +31,7 @@
         } else $year = 4;
         $sqlQuery = sprintf("insert into $table (name, email, school, yearsInSchool, major, sport, password) values ('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
 				$name, $email, $school, $year, $major, $sport, $password);
-        
+
         $result = $db_connection->query($sqlQuery);
 		
         if ($result) {

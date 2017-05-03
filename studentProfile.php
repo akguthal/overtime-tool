@@ -2,6 +2,20 @@
 <?php
 session_start();
 
+if(isset($_POST["submit"])) {
+    echo("yep");
+
+    $_SESSION["year"] = $_POST["year"];
+    $_SESSION["major"] = $_POST["major"];
+    $_SESSION["sport"] = $_POST["sport"];
+    $_SESSION["school"] = $_POST["school"];
+    $_SESSION["newProfile"] = "new";
+    $_SESSION["studentProfile"] = "student";
+
+    header("Location: storeInDatabase.php");
+} else {
+    echo("nope");
+}
 $body = <<<ENDOFDATA
 <!DOCTYPE html>
 <html lang="en">
@@ -11,8 +25,7 @@ $body = <<<ENDOFDATA
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="upload.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="css/profileStyle.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
@@ -29,10 +42,10 @@ $body = <<<ENDOFDATA
 
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
+                <li class="active"><a href="home.html">Home</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                <li><a href="Login.html"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
         </div>
     </nav>
@@ -42,20 +55,22 @@ $body = <<<ENDOFDATA
     <div class="row">
         <h2><strong>Create Profile</strong></h2>
         <div class="col-sm-5" align="right">
+      
             <div class="img-section"  >
                 <input type="image" id='img-upload' src="http://s3.amazonaws.com/37assets/svn/765-default-avatar.png" width="200" height="200" />
                 <span class="fake-icon-edit" id="PicUpload" style="color: #ffffff;"><span class="glyphicon glyphicon-camera camera"></span></span>
             </div>
             <div>
                 <span class="btn  btn-file" >
-                     <input type="file" id="imgInp" accept="image/*" style="visibility: hidden; display: block" >
+                     <input type="file" name="profile" id="imgInp" accept="image/*" style="visibility: hidden; display: block" >
                 </span>
 
             </div>
+            
         </div>
         <div class="col-sm-5" >
             <div class="info" >
-                <form action = "{$_SERVER['PHP_SELF']}" method = "post"
+                <form action = "{$_SERVER['PHP_SELF']}" method = "post" >
                 <label>Name</label>
                 <input type="text" class="form-control" name="name" id="name" value="{$_SESSION['name']}" />
                 <br/>
@@ -121,16 +136,4 @@ $body = <<<ENDOFDATA
 </html>
 ENDOFDATA;
 echo ($body);
-if(isset($_POST["submit"])) {
-    echo("yep");
 
-    $_SESSION["year"] = $_POST["year"];
-    $_SESSION["major"] = $_POST["major"];
-    $_SESSION["sport"] = $_POST["sport"];
-    $_SESSION["school"] = $_POST["school"];
-    $_SESSION["newProfile"] = "new";
-    $_SESSION["studentProfile"] = "student";
-    header("Location: storeInDatabase.php");
-} else {
-    echo("nope");
-}

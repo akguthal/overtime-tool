@@ -2,6 +2,8 @@
 
 session_start();
 
+
+
 $body = <<<ENDOFDATA
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +13,6 @@ $body = <<<ENDOFDATA
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="upload.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="css/profileStyle.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -29,10 +30,10 @@ $body = <<<ENDOFDATA
 
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
+                <li class="active"><a href="home.html">Home</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                <li><a href="Login.html"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
         </div>
     </nav>
@@ -60,7 +61,7 @@ $body = <<<ENDOFDATA
                 <br/>
                 <label>Company</label>
                 <input type="text" class="form-control" name="employer" id="employer" " 
-                <br/>
+                <br/><br/>
                 <label>University</label>
                 <select name="school" size="5" class="form-control">
                     <option value="Michigan">University of Michigan</option>
