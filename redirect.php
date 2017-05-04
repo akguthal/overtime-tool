@@ -20,7 +20,7 @@
                     } else {
                         $recordArray = mysqli_fetch_array($result2, MYSQLI_ASSOC);
                         $password = $recordArray['password'];
-                        if($password != $_POST["password"]) {
+                        if($password != hash('sha256', $_POST["password"])) {
 							$_SESSION["wrong"] = "wrong";
                             header("Location: Login.php");
                         } else header("Location: home.html");
@@ -29,7 +29,7 @@
             } else {
                 $recordArray = mysqli_fetch_array($result, MYSQLI_ASSOC);
                 $password = $recordArray['password'];
-                if($password != $_POST["password"]) {
+                if($password != hash('sha256', $_POST["password"])) {
 					$_SESSION["wrong"] = "wrong";
                     header("Location: Login.php");
                 } else {

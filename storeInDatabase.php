@@ -19,7 +19,7 @@
         $major = $_SESSION["major"];
         $sport = $_SESSION["sport"];
         $school = $_SESSION["school"];
-        $password = $_SESSION["psw"];
+        $password = hash('sha256', $_SESSION["psw"]);
         if($year == "freshman") {
             $year = 1;
         } elseif($year == "sophomore") {
@@ -46,7 +46,7 @@
         $school = $_SESSION["school"];
         $sport = $_SESSION["sport"];
         $field = $_SESSION["field"];
-        $password = $_SESSION["psw"];
+        $password = hash('sha256', $_SESSION["psw"]);
         $sqlQuery = sprintf("insert into $table (name, email, profession, employer, school, sport, password) values ('%s', '%s', '%s', '%s', '%s', '%s', '%s')", 
 				$name, $email, $field, $employer, $school, $sport, $password);
         
