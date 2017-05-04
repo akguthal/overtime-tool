@@ -2,7 +2,7 @@
 <?php
 require_once("dblogin.php");
     echo("top");
-    echo($_FILES);
+    print_r($_FILES);
     session_start();
 
     $db_connection = new mysqli($host, $user, $pass, $database);
