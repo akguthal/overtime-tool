@@ -36,7 +36,7 @@
 		
         if ($result) {
             echo("jere");
-            header("Location: home.html");
+            header("Location: loadHome.php");
         } else {
             echo(mysqli_error($db_connection));
         }

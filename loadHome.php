@@ -1,3 +1,84 @@
+<?php
+    require_once("dblogin.php");
+
+    print_r($_SESSION);
+
+    $loginEmail = 'melotrimble@gmail.com';//$SESSION['loginEmail'];
+
+    $db_connection = new mysqli($host, $user, $pass, $database);
+        if ($db_connection->connect_error) {
+            die($db_connection->connect_error);
+    }
+
+    $queryStudent = "select * from studentAthlete where email='$loginEmail'";
+    $queryRecruiter = "select * from recruiter where email='$loginEmail'";
+    
+    $resultStudent = $db_connection->query($queryStudent);
+    $num_rows = $resultStudent->num_rows;
+    $isStudent;
+    
+    if ($num_rows > 0) {
+        print 'student';        
+        $current = $resultStudent->fetch_assoc();
+        
+        $currentInfo = <<<INFO
+            <img src="img/profile.png">
+            <p>{$current['name']}</p>
+INFO;
+        print $currentInfo;
+        
+        $queryConnections = "select *from recruiter where email in (select recruiterEmail from studentRecruiterConnection where studentEmail='$loginEmail')";
+        $isStudent = true;
+    } else {
+        print 'recruiter';
+        $resultRecrutier = $db_connection->query($queryRecruiter);
+        $current = $resultRecruiter->fetch_assoc();
+        $queryConnectionsRecruiter = "select studentEmail from studentRecruiterConnection where email='$loginEmail'
+                                union select recruiterEmail1 from recruiterRecruiterConnection where email='$loginEmail'
+                                union select recruiterEmail2 from recruiterRecruiterConnection where email='$loginEmail'";
+        $isStudent = false;
+    }
+
+    //CONNECTIONS
+    
+    $resultConnections = $db_connection->query($queryConnections);
+    $num_rows = $resultConnections->num_rows;
+    $contacts = "";
+
+    for ($row_index = 0; $row_index < $num_rows; $row_index++) {
+        $resultConnections->data_seek($row_index);
+        $entry = $resultConnections->fetch_array(MYSQLI_ASSOC);
+        
+        if ($isStudent) {  //////////////////change image
+            $contacts += <<<CONTACT
+            <div class="row leftRow" onclick="clickConnection()">
+              <div class="col-sm-2">
+                <img class="leftProfile" src="img/profile.png" /> 
+              </div>
+              <div class="col-sm-9">
+                <h3>{$entry['name']}</h3>
+                <p>{$entry['employer']}</p>
+              </div>
+            </div>
+CONTACT;
+        } else {
+            $contacts += <<<CONTACT
+            <div class="row leftRow" onclick="clickConnection()">
+              <div class="col-sm-2">
+                <img class="leftProfile" src="img/profile.png" /> 
+              </div>
+              <div class="col-sm-9">
+                <h3>{$entry['name']}</h3>
+                <p>{$entry['school']}</p>
+              </div>
+            </div>
+CONTACT;
+        }
+    }
+
+    //SEARCH    
+?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -44,46 +125,6 @@
       <div class = "col-sm-3" id = "leftPanel">
         <div class = "row" id = "leftHeader">
           <h2>Contacts</h2>
-        </div>
-
-        <div class = "row leftRow" onclick="clickConnection(this)">
-          <div class = "col-sm-2">
-            <img class = "leftProfile" src = "img/profile.png" />
-          </div>
-          <div class = "col-sm-9">
-            <h3>John Doe</h3>
-            <p>Recruiter at Company</p>
-          </div>
-        </div>
-
-        <div class = "row leftRow">
-          <div class = "col-sm-2">
-            <img class = "leftProfile" src = "img/profile.png" />
-          </div>
-          <div class = "col-sm-9">
-            <h3>John Doe</h3>
-            <p>Recruiter at Company</p>
-          </div>
-        </div>
-
-        <div class = "row leftRow">
-          <div class = "col-sm-2">
-            <img class = "leftProfile" src = "img/profile.png" />
-          </div>
-          <div class = "col-sm-9">
-            <h3>John Doe</h3>
-            <p>Recruiter at Company</p>
-          </div>
-        </div>
-
-        <div class = "row leftRow">
-          <div class = "col-sm-2">
-            <img class = "leftProfile" src = "img/profile.png" />
-          </div>
-          <div class = "col-sm-9">
-            <h3>John Doe</h3>
-            <p>Recruiter at Company</p>
-          </div>
         </div>
       </div>
 
