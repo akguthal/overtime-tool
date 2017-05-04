@@ -3,16 +3,16 @@
 session_start();
 
 if(isset($_POST["submit"])) {
-    echo("yep");
+    $_SESSION["name"] = $_POST["name"];
     $_SESSION["year"] = $_POST["year"];
     $_SESSION["major"] = $_POST["major"];
     $_SESSION["sport"] = $_POST["sport"];
     $_SESSION["school"] = $_POST["school"];
-    $_SESSION["newProfile"] = "new";
+    $_SESSION["newStudent"] = "new";
     $_SESSION["studentProfile"] = "student";
+    //echo($_COOKIE["img"]);
+    //echo("<img src=\"{$_COOKIE['img']}\" alt='image'>");
     header("Location: storeInDatabase.php");
-} else {
-    echo("nope");
 }
 
 $body = <<<ENDOFDATA
@@ -52,9 +52,10 @@ $body = <<<ENDOFDATA
 <div class="container" >
     <div class="row">
         <h2><strong>Create Profile</strong></h2>
+        
         <div class="col-sm-5" align="right">
             <div class="img-section"  >
-                <input type="image" id='img-upload' src="http://s3.amazonaws.com/37assets/svn/765-default-avatar.png" width="200" height="200" />
+                <input type="image" id='img-upload' name="image" src="http://s3.amazonaws.com/37assets/svn/765-default-avatar.png" width="200" height="200"/>
                 <span class="fake-icon-edit" id="PicUpload" style="color: #ffffff;"><span class="glyphicon glyphicon-camera camera"></span></span>
             </div>
             <div>
@@ -65,7 +66,7 @@ $body = <<<ENDOFDATA
         </div>
         <div class="col-sm-5" >
             <div class="info" >
-                <form action = "{$_SERVER['PHP_SELF']}" method = "post"
+                <form action = "{$_SERVER['PHP_SELF']}" method = "post">
                 <label>Name</label>
                 <input type="text" class="form-control" name="name" id="name" value="{$_SESSION['name']}" />
                 <br/>
@@ -118,13 +119,36 @@ $body = <<<ENDOFDATA
                 </select>
                 <br/>
                 <input type="submit" class="form-control" value="SAVE" name="submit" align="right" id="save">
+                </form>
             </div>
-            </form>
+            
         </div>
     </div>
+    
 </div>
 </body>
 </html>
 ENDOFDATA;
 echo ($body);
+/*
+ *<script>
+    let img=document.getElementById("img-upload");
+    img.onload = function() {
+        let imgInp=document.getElementById("imgInp");
+        //alert(document.getElementById("imgInp").value);
+        //alert(typeof(imgInp.value));
+        //let string = "img="+img.src;
+        //alert(string);
+        //document.cookie = string;
+        //document.cookie = "img=" + imgInp.value + "; expires=Thu, 4 May 2017 20:47:11 UTC; path=/; domain=.studentProfile.php";
+        //document.cookie = "img=asdffsad";
+        //alert(document.cookie);
+        //document.write(img.src);
+        let str = imgInp.src;
+        alert(str);
+        document.write("<img src=\"" + str +"\" alt=\"image\">");
+    }
+    
+</script>
+*/
 ?>
