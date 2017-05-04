@@ -1,5 +1,6 @@
 /* mysql.exe -u root overtime < "file location" */
 grant all on overtime.* to dbuser@localhost identified by 'password';
+
 drop table if exists studentAthlete;
 drop table if exists recruiter;
 drop table if exists studentRecruiterConnection;
@@ -23,9 +24,9 @@ insert into studentAthlete(name, email, school, major, yearsInSchool, sport, pas
 
 create table recruiter(name char(30) not null, email char(30) primary key, profession char(30) not null, employer char(30) not null, school char(20) not null,  sport char(30) not null, password char(255) not null);
 insert into recruiter(name, email, profession, employer, school, sport, password) values("Example Something", "example@something.com", "Whatever", "Some Company", "Maryland", "Basketball", "example");
-insert into recruiter(name, email, profession, employer, school, sport, password) values("Jane Doe", "janedoe@aol.com", "Public Relations", "PR Company", "North Carolina", "Lacrosse", "jane");
+insert into recruiter(name, email, profession, employer, school, sport, password) values("Jane Doe", "janedoe@aol.com", "Public Relations", "PR Company", "Michigan State", "Lacrosse", "jane");
 insert into recruiter(name, email, profession, employer, school, sport, password) values("John Smith", "johnsmith@gmail.com", "Marketing", "Some marketing company", "Maryland", "Baseball", "john");
-insert into recruiter(name, email, profession, employer, school, sport, password) values("a", "a@gmail.com", "PR", "ABC", "Purdue", "Baseball", "a");
+insert into recruiter(name, email, profession, employer, school, sport, password) values("a", "a@gmail.com", "PR", "ABC", "Indiana", "Baseball", "a");
 insert into recruiter(name, email, profession, employer, school, sport, password) values("b", "b@gmail.com", "Teacher", "ABC", "Nebraska", "Basketball", "b");
 insert into recruiter(name, email, profession, employer, school, sport, password) values("c", "c@gmail.com", "Teacher", "ABC", "Iowa", "Football", "c");
 insert into recruiter(name, email, profession, employer, school, sport, password) values("d", "d@gmail.com", "Finance", "ABC", "Rutgers", "Soccer", "d");
@@ -44,6 +45,7 @@ insert into studentRecruiterConnection(studentEmail, recruiterEmail, status) val
 insert into studentRecruiterConnection(studentEmail, recruiterEmail, status) values("melotrimble@gmail.com", "johnsmith@gmail.com", "pending");
 insert into studentRecruiterConnection(studentEmail, recruiterEmail, status) values("diamondstone@umd.com", "example@something.com", "connected");
 insert into studentRecruiterConnection(studentEmail, recruiterEmail, status) values("diamondstone@umd.com", "janedoe@aol.com", "denied");
+insert into studentRecruiterConnection(studentEmail, recruiterEmail, status) values("c@gmail.com", "a@gmail.com", "connected");
 
 create table recruiterRecruiterConnection(recruiterEmail1 char(30) not null, recruiterEmail2 char(30) not null, status enum('connected', 'pending', 'denied') not null);
 insert into recruiterRecruiterConnection(recruiterEmail1, recruiterEmail2, status) values("example@something.com", "janedoe@aol.com", "connected");
@@ -53,7 +55,7 @@ insert into recruiterRecruiterConnection(recruiterEmail1, recruiterEmail2, statu
 /*create view connected as select studentEmail, recruiterEmail from studentRecruiterConnection where status = 'connected';*/
 
 /*Get the recruiters a student is connected to: */
-/*select * from recruiter where email in (select recruiterEmail from connected 	where studentEmail = [student email]);*/
+/*select * from recruiter where email in (select recruiterEmail from connected where studentEmail = [student email]);*/
 
 /*Get the students a recruiter is connected to:*/
 /*select * from studentAthlete where email in (select studentEmail from connected where recruiterEmail = [recruiter email]);*/
@@ -89,5 +91,3 @@ insert into recruiterRecruiterConnection(recruiterEmail1, recruiterEmail2, statu
         Guidance Counselor- Sociology
         Police- Criminal Justice
 */
-
-
