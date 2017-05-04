@@ -12,6 +12,8 @@ if(isset($_POST["submit"])) {
     $_SESSION["studentProfile"] = "student";
     //echo($_COOKIE["img"]);
     //echo("<img src=\"{$_COOKIE['img']}\" alt='image'>");
+    $_SESSION["newProfile"] = "new";
+    $_SESSION["studentProfile"] = "student";
     header("Location: storeInDatabase.php");
 }
 
@@ -26,6 +28,7 @@ $body = <<<ENDOFDATA
     <link rel="stylesheet" type="text/css" href="css/profileStyle.css">
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
@@ -41,10 +44,10 @@ $body = <<<ENDOFDATA
                 <img class="logo-img" src="img/OTLogo2.png" width="120" height="50" align="top">
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
+                <li class="active"><a href="home.html">Home</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                <li><a href="Login.html"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
         </div>
     </nav>
@@ -54,19 +57,21 @@ $body = <<<ENDOFDATA
         <h2><strong>Create Profile</strong></h2>
         
         <div class="col-sm-5" align="right">
+      
             <div class="img-section"  >
                 <input type="image" id='img-upload' name="image" src="http://s3.amazonaws.com/37assets/svn/765-default-avatar.png" width="200" height="200"/>
                 <span class="fake-icon-edit" id="PicUpload" style="color: #ffffff;"><span class="glyphicon glyphicon-camera camera"></span></span>
             </div>
             <div>
                 <span class="btn  btn-file" >
-                     <input type="file" id="imgInp" accept="image/*" style="visibility: hidden; display: block" >
+                     <input type="file" name="profile" id="imgInp" accept="image/*" style="visibility: hidden; display: block" >
                 </span>
             </div>
+            
         </div>
         <div class="col-sm-5" >
             <div class="info" >
-                <form action = "{$_SERVER['PHP_SELF']}" method = "post">
+                <form action = "{$_SERVER['PHP_SELF']}" method = "post" >
                 <label>Name</label>
                 <input type="text" class="form-control" name="name" id="name" value="{$_SESSION['name']}" />
                 <br/>
@@ -121,7 +126,8 @@ $body = <<<ENDOFDATA
                 <input type="submit" class="form-control" value="SAVE" name="submit" align="right" id="save">
                 </form>
             </div>
-            
+            </div>
+
         </div>
     </div>
     
@@ -152,3 +158,6 @@ echo ($body);
 </script>
 */
 ?>
+=======
+
+>>>>>>> master

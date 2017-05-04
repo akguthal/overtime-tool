@@ -59,11 +59,17 @@ $body = <<<EOMID
                         </div>
                     </div>
                 </div>
+                <div  class="form-group">
+                    <label>Login in as:</label><br/>
+                    <label class="radio-inline"><input type= radio name="user" value="recruiter">Recruiter</label>
+                    <label class="radio-inline"><input type= radio name="user" value="student">Student</label>
 
+                </div>
                 <div class="form-group ">                    
                         <input type="submit" name="login" value="Sign in" class="login-button"></input>        
                 </div>
                 </form>
+            
 EOMID;
     if(isset($_SESSION["wrong"])) {
         $_SESSION["wrong"] = null;

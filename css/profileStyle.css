@@ -1,0 +1,58 @@
+body,html{
+
+    font-family: 'Oxygen', sans-serif;
+}
+
+
+.container{
+    background-color: whitesmoke;
+    border-radius: 5px;
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+#img-upload{
+
+    border-radius: 50%;
+    border: black;
+    border-style: groove;
+
+}
+#PicUpload{
+    color: #ffffff;
+    width: 180px;
+    height: 180px;
+    padding: 100px;
+    position: absolute;
+    left: 30.5%;
+    border-radius: 50%;
+
+    top:15px;
+}
+.img-section{
+    float: right;width: 100%;padding-top: 15px;padding-bottom: 15px;;position: relative;
+    margin-right: 25%;
+    margin-top: 15%;
+}
+.camera{
+    font-size: 50px;
+    color: #333;
+    opacity: .5;
+}
+h2{
+    text-align: center;
+    font-weight: bold;
+
+}
+.info{
+    text-align: center;
+    width: auto;
+    padding: 20px 30px;
+    margin: auto;
+    color : gray
+}
+
+#save{
+    border-radius: 5px;
+    background:#ff5252;
+    border-color: rgba(48, 46, 45, 1);
+    color: white;
+}

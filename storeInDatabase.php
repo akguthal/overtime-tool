@@ -49,7 +49,6 @@
         $password = hash('sha256', $_SESSION["psw"]);
         $sqlQuery = sprintf("insert into $table (name, email, profession, employer, school, sport, password) values ('%s', '%s', '%s', '%s', '%s', '%s', '%s')", 
 				$name, $email, $field, $employer, $school, $sport, $password);
-        
         $result = $db_connection->query($sqlQuery);
 		
         if ($result) {
