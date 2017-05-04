@@ -1,7 +1,18 @@
 <?php
-
 session_start();
 
+if(isset($_POST["submit"])) {
+    $_SESSION["name"] = $_POST["name"];
+    $_SESSION["employer"] = $_POST["employer"];
+    $_SESSION["school"] = $_POST["school"];
+    $_SESSION["sport"] = $_POST["sport"];
+    $_SESSION["field"] = $_POST["field"];
+    $_SESSION["newRecruiter"] = "new";
+    $_SESSION["recruiterProfile"] = "student";
+    //echo($_COOKIE["img"]);
+    //echo("<img src=\"{$_COOKIE['img']}\" alt='image'>");
+    header("Location: storeInDatabase.php");
+}
 
 
 $body = <<<ENDOFDATA
@@ -27,7 +38,6 @@ $body = <<<ENDOFDATA
         <div class="container-fluid">
             <div class="navbar-header">
                 <img class="logo-img" src="img/OTLogo2.png" width="120" height="50" align="top">
-
             </div>
             <ul class="nav navbar-nav">
                 <li class="active"><a href="home.html">Home</a></li>
@@ -39,7 +49,6 @@ $body = <<<ENDOFDATA
     </nav>
 </div>
 <div class="container" >
-
     <div class="row">
         <h2><strong>Create Profile</strong></h2>
         <div class="col-sm-5" align="right">
@@ -51,17 +60,19 @@ $body = <<<ENDOFDATA
                 <span class="btn  btn-file" >
                      <input type="file" id="imgInp" accept="image/*" style="visibility: hidden; display: block" >
                 </span>
-
             </div>
         </div>
         <div class="col-sm-5" >
             <div class="info" >
+                <form action="{$_SERVER['PHP_SELF']}" method="post">
                 <label>Name</label>
                 <input type="text" class="form-control" name="name" id="name" value="{$_SESSION['name']}" />
                 <br/>
                 <label>Company</label>
                 <input type="text" class="form-control" name="employer" id="employer" " 
-                <br/><br/>
+
+                <br/>
+
                 <label>University</label>
                    <select name="school" size="5" class="form-control">
                     <option value="Maryland">University of Maryland</option>
@@ -111,17 +122,13 @@ $body = <<<ENDOFDATA
                 <br/>
                 <br/>
                 <input type="submit" class="form-control" value="SAVE" name="submit" align="right" id="save">
+                </form>
             </div>
-
-
         </div>
-
     </div>
-
 </div>
-
 </body>
 </html>
 ENDOFDATA;
-session_destroy();
 echo ($body);
+?>
