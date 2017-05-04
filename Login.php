@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+<?php
+session_start();
+
+$body = <<<EOMID
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -36,7 +40,7 @@
             <br/>
             <div id="myTabContent" class="tab-content">
                 <div class="tab-pane active in" id="login">
-                    <form class="form-horizontal" method="post" action="#">
+                    <form class="form-horizontal" method="post" action="redirect.php">
                     <div class="form-group">
                         <label for="username" class="cols-sm-2 control-label">Username</label>
                     <div class="cols-sm-10">
@@ -46,7 +50,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label for="password" class="cols-sm-2 control-label">Password</label>
                     <div class="cols-sm-10">
@@ -57,16 +60,21 @@
                     </div>
                 </div>
                 <div  class="form-group">
-                    <label>Login in as:</label><br/>
-                    <label class="radio-inline"><input type= radio name="user" value="recruiter">Recruiter</label>
-                    <label class="radio-inline"><input type= radio name="user" value="student">Student</label>
+                    <label>Login as:</label><br/>
+                    <label class="radio-inline"><input type= radio name="user" required value="recruiter">Recruiter</label>
+                    <label class="radio-inline"><input type= radio name="user" required value="student">Student</label>
 
                 </div>
-                <div class="form-group ">
-                    <button type="button" class="login-button">Sign in</button>
+EOMID;
+    if(isset($_SESSION["wrong"])) {
+        $_SESSION["wrong"] = null;
+        $body.="<span style=\"color:red;\">Incorrect username or password.</span>";
+    }
+    $rest = <<< EOBOD
+                <div class="form-group ">                    
+                        <input type="submit" name="login" value="Sign in" class="login-button"></input>        
                 </div>
-
-            </form>
+                </form>
             </div>
                 <div class="tab-pane fade" id="create">
 
@@ -111,3 +119,7 @@
 
 </body>
 </html>
+EOBOD;
+$body.=$rest;
+echo($body);
+?>
