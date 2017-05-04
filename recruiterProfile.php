@@ -74,7 +74,8 @@ $body = <<<ENDOFDATA
                 <br/>
 
                 <label>University</label>
-                <select name="school" size="5" class="form-control">
+                   <select name="school" size="5" class="form-control">
+                    <option value="Maryland">University of Maryland</option>
                     <option value="Michigan">University of Michigan</option>
                     <option value="Northwestern">Northwestern University</option>
                     <option value="Wisconsin">Wisconsin University</option>
@@ -85,6 +86,9 @@ $body = <<<ENDOFDATA
                     <option value="Purdue">Purdue University</option>
                     <option value="Minnesota">University of Minnesota</option>
                     <option value="Indiana">Indiana University</option>
+                    <option value="Rutgers">Rutgers University</option>
+                    <option value="Iowa">University of Iowa</option>
+                    <option value="Nebraska">University of Nebraska</option>
                 </select>
                 <br/>
                  <label>Sport</label>
@@ -103,16 +107,16 @@ $body = <<<ENDOFDATA
                 <br/>
                  <label>Fields</label>
                  <select name="field" size="5" class="form-control">
-                    <option value="PR">PR- Business, Communication</option>
-                    <option value="Marketing">Marketing- Business, Communication</option>
-                    <option value="Finance">Finance- Business</option>
-                    <option value="Sales">Sales- Business, Communication</option>
-                    <option value="Teacjer">Teacher- Education, Math, History</option>
-                    <option value="SE">Software Engineer- Computer Science</option>
-                    <option value="Engineer">Engineer- Engineering</option>
-                    <option value="Trainer">Personal Trainer- Sport Science/option>
-                    <option value="Counselor">Guidance Counselor- Sociology</option>
-                    <option value="Police">Police- Criminal Justice</option>
+                    <option value="PR">PR</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Sales">Sales</option>
+                    <option value="Teacjer">Teacher</option>
+                    <option value="SE">Software Engineer</option>
+                    <option value="Engineer">Engineer</option>
+                    <option value="Trainer">Personal Trainer/option>
+                    <option value="Counselor">Guidance Counselor</option>
+                    <option value="Police">Police</option>
                 
                 </select>
                 <br/>

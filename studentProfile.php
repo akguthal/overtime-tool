@@ -77,6 +77,7 @@ $body = <<<ENDOFDATA
                 <br/>
                 <label>University</label>
                 <select name="school" size="5" class="form-control">
+                    <option value="Maryland">University of Maryland</option>
                     <option value="Michigan">University of Michigan</option>
                     <option value="Northwestern">Northwestern University</option>
                     <option value="Wisconsin">Wisconsin University</option>
@@ -87,6 +88,9 @@ $body = <<<ENDOFDATA
                     <option value="Purdue">Purdue University</option>
                     <option value="Minnesota">University of Minnesota</option>
                     <option value="Indiana">Indiana University</option>
+                    <option value="Rutgers">Rutgers University</option>
+                    <option value="Iowa">University of Iowa</option>
+                    <option value="Nebraska">University of Nebraska</option>
                 </select>
                 <br/>
                 <label>Major</label>
