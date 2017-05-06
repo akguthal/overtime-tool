@@ -163,6 +163,3 @@ echo ($body);
 </script>
 */
 ?>
-=======
-
->>>>>>> master

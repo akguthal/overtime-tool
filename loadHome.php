@@ -8,10 +8,8 @@
             die($db_connection->connect_error);
     }
 
-    $loginEmail = 'example@something.com';
-    //$loginEmail = $_SESSION['email'];
-    //$isStudent = $_SESSION['isStudent'];
-    $isStudent = false;
+    $loginEmail = $_SESSION['email'];
+    $isStudent = $_SESSION['isStudent'];
 
     if ($isStudent) {
         $query = "select * from studentAthlete where email='$loginEmail'";
@@ -40,7 +38,6 @@ INFO;
     for ($row_index = 0; $row_index < $num_rows; $row_index++) {
         $resultConnections->data_seek($row_index);
         $entry = $resultConnections->fetch_array(MYSQLI_ASSOC);
-        print_r($entry);
         
         if ($isStudent) {  //////////////////change image
             $contacts .= <<<CONTACT
@@ -116,30 +113,18 @@ CONTACT;
     arsort($values);
     $index = 0;
     $matches = "";
-
-   // print_r($values);
-    //print_r($people);
     
-    if ($isStudent) {
-        foreach ($values as $email => $value) {
-            $matches .= <<<PEOPLE
-                <div class = "col-md-3 rightBox">
-                    <img class = "rightProfile" src = "img/profile.png" />
-                    <h3>{$people[$email]['name']}</h3>
-                    <p>{$people[$email]['school']}</p>
-                </div> 
+    foreach ($values as $email => $value) {
+        $matches .= <<<PEOPLE
+            <div class = "col-md-3 rightBox">
+                <img class = "rightProfile" src = "img/profile.png" />
+                <h3>{$people[$email]['name']}</h3>
 PEOPLE;
-        }
-    } else {
-        foreach ($values as $email => $value) {
-            $matches .= <<<PEOPLE
-                <div class = "col-md-3 rightBox">
-                    <img class = "rightProfile" src = "img/profile.png" />
-                    <h3>{$people[$email]['name']}</h3>
-                    <p>{$people[$email]['employer']}</p>
-                </div> 
-PEOPLE;
-        }
+        if ($isStudent)
+            $matches .= "<p>{$people[$email]['employer']}</p></div>";
+        else
+            $matches .= "<p>{$people[$email]['school']}</p></div>";   
+             
     }
 
     $html = <<<HTML
@@ -205,6 +190,6 @@ PEOPLE;
         </html>    
 HTML;
 
-    //echo $html;
+    echo $html;
 ?>
 
