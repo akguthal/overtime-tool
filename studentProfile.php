@@ -8,6 +8,7 @@ if(isset($_POST["submit"])) {
     $_SESSION["major"] = $_POST["major"];
     $_SESSION["sport"] = $_POST["sport"];
     $_SESSION["school"] = $_POST["school"];
+    $_SESSION["isStudent"] =true;
     $_SESSION["newStudent"] = "new";
     $_SESSION["studentProfile"] = "student";
     //echo($_COOKIE["img"]);

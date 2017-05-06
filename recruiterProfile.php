@@ -7,6 +7,7 @@ if(isset($_POST["submit"])) {
     $_SESSION["school"] = $_POST["school"];
     $_SESSION["sport"] = $_POST["sport"];
     $_SESSION["field"] = $_POST["field"];
+    $_SESSION["isStudent"] = false;
     $_SESSION["newRecruiter"] = "new";
     $_SESSION["recruiterProfile"] = "student";
     //echo($_COOKIE["img"]);
