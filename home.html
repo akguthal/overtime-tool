@@ -3,9 +3,10 @@
   <head>
     <title>OverTime</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="main.js"></script>
     <link rel="stylesheet" type = "text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
     <link rel="stylesheet" type = "text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type = "text/css" href="css/style.css">
     <link rel="icon" href="img/OTLogo3.png" />
   </head>
@@ -13,23 +14,26 @@
   <body>
     <nav class="navbar navbar-default" role="navigation" style = "margin-bottom: 0px; border:0px;">
       <div class="navbar-header" style = "background-color: #181132">
+        <img src = "img/profile.png" /> Nicole Hwang
+
+      </div>
+
+
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">
-            <img src = "img/profile.png"  />
-          </a>
-      </div>
+
+
 
 
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style = "background-color: #181132; border:0px">
           <div class="pull-right">
               <form class="navbar-form" role="search" id = "searchBar">
                   <div class="input-group">
-                      <input id = "search-bar" type="text" class="form-control" placeholder="Search by name, major, company or interests" name="q">
+                      <input id = "search-bar" type="text" class="form-control" placeholder="Search by name, major, etc." name="q">
                       <div class="input-group-btn">
                           <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                       </div>
@@ -37,6 +41,8 @@
               </form>
           </div>
       </div>
+
+
     </nav>
 
     <div class = "row full-content">
@@ -45,7 +51,7 @@
           <h2>Contacts</h2>
         </div>
 
-        <div class = "row leftRow">
+        <div class = "row leftRow" onclick="clickConnection(this)">
           <div class = "col-sm-2">
             <img class = "leftProfile" src = "img/profile.png" />
           </div>

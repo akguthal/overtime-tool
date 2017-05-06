@@ -37,6 +37,7 @@ $(document).ready( function() {
         $("input[id='imgInp']").click();
 
         $("#imgInp").change(function () {
+            console.log(this);
             readURL(this);
         });
     });
