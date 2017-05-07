@@ -55,7 +55,7 @@ INFO;
                   <div class="col-sm-9">
                     <h3>{$entry['name']}</h3>
                     <p>{$entry['employer']}</p>
-                    <p hidden>{$entry['email']}</p>
+                    <p  id="email">{$entry['email']}</p>
                   </div>
                 </div>
 CONTACT;
@@ -68,7 +68,7 @@ CONTACT;
                   <div class="col-sm-9">
                     <h3>{$entry['name']}</h3>
                     <p>{$entry['school']}</p>
-                    <p hidden>{$entry['email']}</p>
+                    <p id="email">{$entry['email']}</p>
                   </div>
                 </div>
 CONTACT;
@@ -132,7 +132,7 @@ CONTACT;
         $matches .= <<<PEOPLE
             <div class = "col-md-2 rightBox" onclick="clickConnection(this)" data-toggle="modal" data-target="#contactRight">
                 <img class = "rightProfile" src = "{$src}" />
-                <p hidden>{$entry['email']}</p>
+                <p class="email" hidden>{$people[$email]['email']}</p>
                 <h3>{$people[$email]['name']}</h3>
 PEOPLE;
         if ($isStudent)
@@ -243,7 +243,8 @@ function main() {
 }
 
 function clickConnection(thing) {
-    let email = $(thing).find("p").text();
+    let email = $(thing).find(".email").text();
+    alert(email);
     let ajax = new XMLHttpRequest();
     let url = "getUserData.php?email=" + email;
     ajax.open("GET", url, true);
