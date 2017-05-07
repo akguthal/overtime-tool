@@ -43,15 +43,15 @@ insert into recruiter(name, email, profession, employer, school, sport, password
 insert into recruiter(name, email, profession, employer, school, sport, password) values("Karen Xi", "kxi@gmail.com", "Engineer", "ABC", "Michigan State", "Baseball", "k");
 insert into recruiter(name, email, profession, employer, school, sport, password) values("Norris Green", "ngreen@gmail.com", "Engineer", "ABC", "Minnestoa", "Football", "l");
 
-create table studentRecruiterConnection(studentEmail char(30) not null,  recruiterEmail char(30) not null,  status enum('connected', 'pending', 'denied') not null);
+create table studentRecruiterConnection(studentEmail char(30) not null,  recruiterEmail char(30) not null,  status enum('connected', 'pending'  ) not null);
 insert into studentRecruiterConnection(studentEmail, recruiterEmail, status) values("melotrimble@gmail.com", "example@something.com", "connected");
 insert into studentRecruiterConnection(studentEmail, recruiterEmail, status) values("melotrimble@gmail.com", "janedoe@aol.com", "connected");
 insert into studentRecruiterConnection(studentEmail, recruiterEmail, status) values("melotrimble@gmail.com", "johnsmith@gmail.com", "pending");
 insert into studentRecruiterConnection(studentEmail, recruiterEmail, status) values("diamondstone@umd.com", "example@something.com", "connected");
-insert into studentRecruiterConnection(studentEmail, recruiterEmail, status) values("diamondstone@umd.com", "janedoe@aol.com", "denied");
+insert into studentRecruiterConnection(studentEmail, recruiterEmail, status) values("diamondstone@umd.com", "janedoe@aol.com", "connected");
 insert into studentRecruiterConnection(studentEmail, recruiterEmail, status) values("c@gmail.com", "a@gmail.com", "connected");
 
-create table recruiterRecruiterConnection(recruiterEmail1 char(30) not null, recruiterEmail2 char(30) not null, status enum('connected', 'pending', 'denied') not null);
+create table recruiterRecruiterConnection(recruiterEmail1 char(30) not null, recruiterEmail2 char(30) not null, status enum('connected', 'pending') not null);
 insert into recruiterRecruiterConnection(recruiterEmail1, recruiterEmail2, status) values("example@something.com", "janedoe@aol.com", "connected");
 insert into recruiterRecruiterConnection(recruiterEmail1, recruiterEmail2, status) values("johnsmith@gmail.com", "janedoe@aol.com", "pending");
 

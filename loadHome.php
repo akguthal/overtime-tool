@@ -80,28 +80,40 @@ CONTACT;
 
     if ($isStudent) {
         $getAll = "select * from recruiterImage where email not in (select recruiterEmail from studentRecruiterConnection where studentEmail='$loginEmail')";
+        $resultStudents = $db_connection->query($getAll);
+
+        if (!$resultStudents) {
+            die("Retrieval failed: ". $db_connection->error);
+        }
+        
+        $num_rows = $resultStudents->num_rows;
+        $num_rows_recruiter = 0;
     } else {
-        $getAll = "select * from studentImage where email not in (select studentEmail from studentRecruiterConnection where recruiterEmail='$loginEmail')
-        union select * from recruiter where email not in (select recruiterEmail1 from recruiterRecruiterConnection where recruiterEmail2='$loginEmail'
+        $getStudents = "select * from studentImage where email not in (select studentEmail from studentRecruiterConnection where recruiterEmail='$loginEmail')";
+        $getRecruiters = "select * from recruiterImage where email not in (select recruiterEmail1 from recruiterRecruiterConnection where recruiterEmail2='$loginEmail'
                                                             union select recruiterEmail2 from recruiterRecruiterConnection where recruiterEmail1='$loginEmail')";
+        $resultStudents = $db_connection->query($getStudents);
+        $resultRecruiters = $db_connection->query($getRecruiters);
+
+        if (!$resultStudents || !$resultRecruiters) {
+            die("Retrieval failed: ". $db_connection->error);
+        }
+        
+        $num_rows = $resultStudents->num_rows;
+        $num_rows_recruiter = $resultRecruiters->num_rows;
     }
 
-    $resultAll = $db_connection->query($getAll);
-    if (!$resultAll) {
-        die("Retrieval failed: ". $db_connection->error);
-    }
-    $num_rows = $resultAll->num_rows;
     $values = array();
     $majorsFields = array("PR"=>["Business", "Communication"], "Marketing"=>["Business", "Communication"], "Finance"=>["Business"], "Sales"=>["Business", "Communication"],
-                    "Teacher"=>["Education", "Math", "History"], "Software Engineer"=>["Computer Scince"], "Engineer"=>["Engineering"], "PR"=>["Business", "Communication"],
-                    "Athletic Trainer"=>["Sport Science"], "Personal Trainer"=>["Sport Science"], "Guidance Counselor"=>["Sociology"], "Police"=>["Criminal Justice"]);
+                            "Teacher"=>["Education", "Math", "History"], "Software Engineer"=>["Computer Scince"], "Engineer"=>["Engineering"], 
+                            "Athletic Trainer"=>["Sport Science"], "Personal Trainer"=>["Sport Science"], "Guidance Counselor"=>["Sociology"], "Police"=>["Criminal Justice"]);
     $east = ["Maryland", "Penn State", "Rutgers", "Michigan", "Michigan State", "Ohio State", "Indiana"];
     $west = ["Iowa", "Wisonsin", "Nebraska", "Minnesota", "Northwestern". "Purdue", "Illinois"];
 
 
     for ($row_index = 0; $row_index < $num_rows; $row_index++) {
-        $resultAll->data_seek($row_index);
-        $entry = $resultAll->fetch_array(MYSQLI_ASSOC);
+        $resultStudents->data_seek($row_index);
+        $entry = $resultStudents->fetch_array(MYSQLI_ASSOC);
         $total = 0;
         if (!$isStudent && in_array($entry["major"], $majorsFields[$current["profession"]]))
             $total = 30;
@@ -119,6 +131,27 @@ CONTACT;
         $values[$entry["email"]] = $total;
         $people[$entry["email"]] = $entry;
     }
+
+    for ($row_index = 0; $row_index < $num_rows_recruiter; $row_index++) {
+        $resultRecruiters->data_seek($row_index);
+        $entry = $resultRecruiters->fetch_array(MYSQLI_ASSOC);
+        $total = 0;
+
+        if ($current['profession'] === $entry['profession'])
+            $total = 30;
+        if ($entry["school"] === $current["school"])
+            $total += 20;
+        else {
+            if ((in_array($entry["school"], $east) && in_array($current["school"], $east)) || (in_array($entry["school"], $west) && in_array($current["school"], $west)))
+                $total += 8;
+        }
+        if ($entry["sport"] === $current["sport"])
+            $total += 10;
+
+        $values[$entry["email"]] = $total;
+        $people[$entry["email"]] = $entry;
+    }
+
 
     arsort($values);
     $index = 0;
