@@ -2,6 +2,8 @@
 <?php
 session_start();
 
+print_r($_SESSION);
+
 if(isset($_POST["submit"])) {
     $_SESSION["name"] = $_POST["name"];
     $_SESSION["year"] = $_POST["year"];

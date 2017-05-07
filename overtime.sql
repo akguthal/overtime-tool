@@ -5,6 +5,9 @@ drop table if exists studentAthlete;
 drop table if exists recruiter;
 drop table if exists studentRecruiterConnection;
 drop table if exists recruiterRecruiterConnection;
+drop table if exists profileImage;
+drop view  if exists studentImage;
+drop view if exists recruiterImage;
 
 create table studentAthlete(name char(30) not null, email char(30) primary key, school char(30) not null, major char(30) not null, yearsInSchool int, sport char(30) not null, password char(255) not null);
 insert into studentAthlete(name, email, school, major, yearsInSchool, sport, password) values("Melo Trimble", "melotrimble@gmail.com", "Maryland", "Communications", 3, "Basketball", "melo");
@@ -51,6 +54,11 @@ insert into studentRecruiterConnection(studentEmail, recruiterEmail, status) val
 create table recruiterRecruiterConnection(recruiterEmail1 char(30) not null, recruiterEmail2 char(30) not null, status enum('connected', 'pending', 'denied') not null);
 insert into recruiterRecruiterConnection(recruiterEmail1, recruiterEmail2, status) values("example@something.com", "janedoe@aol.com", "connected");
 insert into recruiterRecruiterConnection(recruiterEmail1, recruiterEmail2, status) values("johnsmith@gmail.com", "janedoe@aol.com", "pending");
+
+create table profileImage(email char(30) not null, image longblob not null);
+
+create view studentImage as select studentAthlete.*, profileImage.image from studentAthlete left outer join profileImage on studentAthlete.email=profileImage.email;
+create view recruiterImage as select recruiter.*, profileImage.image from recruiter left outer join profileImage on recruiter.email=profileImage.email;
 
 /*Create a view for the established connections:*/
 /*create view connected as select studentEmail, recruiterEmail from studentRecruiterConnection where status = 'connected';*/

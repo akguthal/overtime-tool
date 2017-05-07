@@ -1,29 +1,28 @@
 
 <?php
 require_once("dblogin.php");
-    echo("top");
-    print_r($_FILES);
     session_start();
+
+    print_r($_SESSION);
 
     $db_connection = new mysqli($host, $user, $pass, $database);
     if ($db_connection->connect_error) {
         die($db_connection->connect_error);
     }
 
-        $imagename = $_FILES['file']['name'];
-        echo($imagename);
-        $imagetmp=addslashes (file_get_contents($_FILES['file']['tmp_name']));
-        
-        $insert_image = "insert into image values('{$imagename}','{$imagetmp}')";
-        $result = $db_connection->query($insert_image);
+    $imagetmp = addslashes(file_get_contents($_FILES['file']['tmp_name']));
+
+    $query = "insert into profileImage values('{$_SESSION['email']}','{$imagetmp}')";
+    $result = $db_connection->query($query);
 
 
-        if ($result) {
-            echo("here");
+    if ($result) {
+        echo("here");
+    } else {
+        echo(mysqli_error($db_connection));
+    }
 
-        } else {
-            echo(mysqli_error($db_connection));
-        }
+?>
 
 
 

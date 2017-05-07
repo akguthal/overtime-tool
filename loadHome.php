@@ -12,20 +12,22 @@
     $isStudent = $_SESSION['isStudent'];
 
     if ($isStudent) {
-        $query = "select * from studentAthlete where email='$loginEmail'";
+        $query = "select * from studentImage where email='$loginEmail'";
         $result = $db_connection->query($query);
         $current = $result->fetch_assoc();
-        $queryConnections = "select * from recruiter where email in (select recruiterEmail from studentRecruiterConnection where studentEmail='$loginEmail')";
+        $queryConnections = "select * from recruiterImage where email in (select recruiterEmail from studentRecruiterConnection where studentEmail='$loginEmail')";
     
     } else {
-        $query = "select * from recruiter where email='$loginEmail'";
+        $query = "select * from recruiterImage where email='$loginEmail'";
         $result = $db_connection->query($query); 
         $current = $result->fetch_assoc();
-        $queryConnections = "select * from studentAthlete where email in (select studentEmail from studentRecruiterConnection where recruiterEmail='$loginEmail')";
+        $queryConnections = "select * from studentImage where email in (select studentEmail from studentRecruiterConnection where recruiterEmail='$loginEmail')";
     }
+    
+    $currentSrc = "data:image/jpeg;base64,".base64_encode($current['image']);
 
     $currentInfo = <<<INFO
-        <img src="img/profile.png">
+        <img src='{$currentSrc}'/>
         <p>{$current['name']}</p>
 INFO;
 
@@ -39,11 +41,16 @@ INFO;
         $resultConnections->data_seek($row_index);
         $entry = $resultConnections->fetch_array(MYSQLI_ASSOC);
         
+        if ($entry['image'] === null)
+            $src = "img/profile.png";
+        else
+            $src = "data:image/jpeg;base64,".base64_encode($entry['image']);
+
         if ($isStudent) {  //////////////////change image
             $contacts .= <<<CONTACT
                 <div class="row leftRow" onclick="clickConnection()">
                   <div class="col-sm-2">
-                    <img class="leftProfile" src="img/profile.png" /> 
+                    <img class="leftProfile" src="{$src}" /> 
                   </div>
                   <div class="col-sm-9">
                     <h3>{$entry['name']}</h3>
@@ -55,7 +62,7 @@ CONTACT;
             $contacts .= <<<CONTACT
                 <div class="row leftRow" onclick="clickConnection()">
                   <div class="col-sm-2">
-                    <img class="leftProfile" src="img/profile.png" /> 
+                    <img class="leftProfile" src="{$src}" /> 
                   </div>
                   <div class="col-sm-9">
                     <h3>{$entry['name']}</h3>
@@ -68,9 +75,9 @@ CONTACT;
     //SEARCH
 
     if ($isStudent) {
-        $getAll = "select * from recruiter where email not in (select recruiterEmail from studentRecruiterConnection where studentEmail='$loginEmail')"; 
+        $getAll = "select * from recruiterImage where email not in (select recruiterEmail from studentRecruiterConnection where studentEmail='$loginEmail')"; 
     } else {
-        $getAll = "select * from studentAthlete where email not in (select studentEmail from studentRecruiterConnection where recruiterEmail='$loginEmail') 
+        $getAll = "select * from studentImage where email not in (select studentEmail from studentRecruiterConnection where recruiterEmail='$loginEmail') 
         union select * from recruiter where email not in (select recruiterEmail1 from recruiterRecruiterConnection where recruiterEmail2='$loginEmail' 
                                                             union select recruiterEmail2 from recruiterRecruiterConnection where recruiterEmail1='$loginEmail')";   
     }
@@ -115,9 +122,14 @@ CONTACT;
     $matches = "";
     
     foreach ($values as $email => $value) {
+        if ($people[$email]['image'] === null)
+            $src = "img/profile.png";
+        else
+            $src = "data:image/jpeg;base64,".base64_encode($people[$email]['image']);
+        
         $matches .= <<<PEOPLE
             <div class = "col-md-3 rightBox">
-                <img class = "rightProfile" src = "img/profile.png" />
+                <img class = "rightProfile" src = "{$src}" />
                 <h3>{$people[$email]['name']}</h3>
 PEOPLE;
         if ($isStudent)
@@ -151,7 +163,7 @@ PEOPLE;
                       <span class="icon-bar"></span>
                   </button>
                   <a class="navbar-brand" href="#">
-                    <img src = "img/profile.png"  />
+                    {$currentInfo}
                   </a>
               </div>
 
