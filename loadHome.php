@@ -27,8 +27,10 @@
     $currentSrc = "data:image/jpeg;base64,".base64_encode($current['image']);
 
     $currentInfo = <<<INFO
+      <a class="navbar-brand" href="#">
         <img src='{$currentSrc}'/>
-        <p>{$current['name']}</p>
+      </a>
+      <p>{$current['name']}</p>
 INFO;
 
     //CONNECTIONS
@@ -48,7 +50,7 @@ INFO;
 
         if ($isStudent) {  //////////////////change image
             $contacts .= <<<CONTACT
-                <div class="row leftRow" onclick="clickConnection()" data-toggle="modal" data-target="#contactLeft">
+                <div class="row leftRow" onclick="clickConnection(this, 'left')" data-toggle="modal" data-target="#contactLeft">
                   <div class="col-sm-2">
                     <img class="leftProfile" src="{$src}" /> {$current['name']}
                   </div>
@@ -61,7 +63,7 @@ INFO;
 CONTACT;
         } else {
             $contacts .= <<<CONTACT
-                <div class="row leftRow" onclick="clickConnection()">
+                <div class="row leftRow" onclick="clickConnection(this, 'left')">
                   <div class="col-sm-2">
                     <img class="leftProfile" src="{$src}" />
                   </div>
@@ -130,7 +132,7 @@ CONTACT;
             $src = "data:image/jpeg;base64,".base64_encode($people[$email]['image']);
 
         $matches .= <<<PEOPLE
-            <div class = "col-md-2 rightBox" onclick="clickConnection(this)" data-toggle="modal" data-target="#contactRight">
+            <div class = "col-md-2 rightBox" onclick="clickConnection(this, 'right')" data-toggle="modal" data-target="#contactRight">
                 <img class = "rightProfile" src = "{$src}" />
                 <p class="email" hidden>{$people[$email]['email']}</p>
                 <h3>{$people[$email]['name']}</h3>
@@ -159,15 +161,13 @@ PEOPLE;
           <body>
             <nav class="navbar navbar-default" role="navigation" style = "margin-bottom: 0px; border:0px;">
               <div class="navbar-header">
-                  <a class="navbar-brand" href="#">
-                    {$currentInfo}
-                  </a>
+                {$currentInfo}
               </div>
 
 
               <div class="pull-right">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="Login.html"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    <li><a href="Login.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 </ul>
               </div>
 
@@ -218,8 +218,8 @@ PEOPLE;
                     <h3>Contact Information</h3>
                   </div>
                   <div class="modal-body">
-                    <h3 id = "contactRightName">John Doe</h3>
-                    <p><b>Recruiter at <span id = "contactRightCompany">Company</span></b></p>
+                    <h3 id = "contactRightName"></h3>
+                    <p>Recruiter at <span id = "contactRightCompany">Company</span></p>
                     <p id = "contactRightField">Field</p>
                     <p id = "contactRightCollege">College Name</p>
                     <p id = "contactRightSport">Sport</p>
@@ -242,16 +242,18 @@ function main() {
     ajax.open("GET", "loadHome.php", false);
 }
 
-function clickConnection(thing) {
+function clickConnection(thing, side) {
     let email = $(thing).find(".email").text();
-    alert(email);
     let ajax = new XMLHttpRequest();
     let url = "getUserData.php?email=" + email;
     ajax.open("GET", url, true);
     ajax.onreadystatechange = function() {
         if (ajax.readyState === 4) {
             if (ajax.status === 200) {
-                let results = ajax.responseText;
+                let results = ajax.responseText.split(",");
+                if (side == "right"){
+                  loadModal(results);
+                }
 
             } else {
                alert("Request Failed.");
@@ -259,6 +261,14 @@ function clickConnection(thing) {
         }
     };
     ajax.send(null);
+}
+
+function loadModal(info){
+  document.getElementById("contactRightName").innerHTML = info[0];
+  document.getElementById("contactRightField").innerHTML = info[2];
+  document.getElementById("contactRightCompany").innerHTML = info[3];
+  document.getElementById("contactRightCollege").innerHTML = info[4];
+  document.getElementById("contactRightSport").innerHTML = info[5];
 }
 
           </script>
