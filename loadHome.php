@@ -48,27 +48,27 @@ INFO;
 
         if ($isStudent) {  //////////////////change image
             $contacts .= <<<CONTACT
-                <div class="row leftRow" onclick="clickConnection()">
+                <div class="row leftRow">
                   <div class="col-sm-2">
                     <img class="leftProfile" src="{$src}" /> {$current['name']}
                   </div>
-                  <div class="col-sm-9">
+                  <div class="col-sm-9" onclick="clickConnection(this)">
                     <h3>{$entry['name']}</h3>
                     <p>{$entry['employer']}</p>
-                    <p  id="email">{$entry['email']}</p>
+                    <p hidden class="email">{$entry['email']}</p>
                   </div>
                 </div>
 CONTACT;
         } else {
             $contacts .= <<<CONTACT
-                <div class="row leftRow" onclick="clickConnection()">
+                <div class="row leftRow" >
                   <div class="col-sm-2">
                     <img class="leftProfile" src="{$src}" />
                   </div>
-                  <div class="col-sm-9">
+                  <div class="col-sm-9" onclick="clickConnection(this)">
                     <h3>{$entry['name']}</h3>
                     <p>{$entry['school']}</p>
-                    <p id="email">{$entry['email']}</p>
+                    <p hidden class="email">{$entry['email']}</p>
                   </div>
                 </div>
 CONTACT;
