@@ -48,7 +48,7 @@ INFO;
 
         if ($isStudent) {  //////////////////change image
             $contacts .= <<<CONTACT
-                <div class="row leftRow" onclick="clickConnection()">
+                <div class="row leftRow" onclick="clickConnection()" data-toggle="modal" data-target="#contactLeft">
                   <div class="col-sm-2">
                     <img class="leftProfile" src="{$src}" /> {$current['name']}
                   </div>
@@ -130,7 +130,7 @@ CONTACT;
             $src = "data:image/jpeg;base64,".base64_encode($people[$email]['image']);
 
         $matches .= <<<PEOPLE
-            <div class = "col-md-2 rightBox" onclick="clickConnection(this)">
+            <div class = "col-md-2 rightBox" onclick="clickConnection(this)" data-toggle="modal" data-target="#contactRight">
                 <img class = "rightProfile" src = "{$src}" />
                 <p hidden>{$entry['email']}</p>
                 <h3>{$people[$email]['name']}</h3>
@@ -189,11 +189,54 @@ PEOPLE;
               </div>
             </div>
 
+            <div class="modal fade" id="contactLeft" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header redbg">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3>Contact Information</h3>
+                  </div>
+                  <div class="modal-body">
+                    <h3>John Doe</h3>
+                    <p><b>Recruiter at Company</b></p>
+                    <p>Send an email:</p>
+                    <textarea type = "text" style = "width: 100%; height: 10%"></textarea>
+                    <button type="button" class="btn btn-default">Send Email</button>
+                  </div>
+                  <div class="modal-footer redbg">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal fade" id="contactRight" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header bluebg">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3>Contact Information</h3>
+                  </div>
+                  <div class="modal-body">
+                    <h3 id = "contactRightName">John Doe</h3>
+                    <p><b>Recruiter at <span id = "contactRightCompany">Company</span></b></p>
+                    <p id = "contactRightField">Field</p>
+                    <p id = "contactRightCollege">College Name</p>
+                    <p id = "contactRightSport">Sport</p>
+                    <p><button type="button" class="btn btn-default">Connect</button></p>
+                  </div>
+                  <div class="modal-footer bluebg">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </body>
           <script>
              $(document).ready(main);
 
-function main() {    
+function main() {
     console.log("main");
     let ajax = new XMLHttpRequest();
     ajax.open("GET", "loadHome.php", false);
@@ -208,11 +251,11 @@ function clickConnection(thing) {
         if (ajax.readyState === 4) {
             if (ajax.status === 200) {
                 let results = ajax.responseText;
-                alert(results);
+
             } else {
                alert("Request Failed.");
             }
-        }    
+        }
     };
     ajax.send(null);
 }
