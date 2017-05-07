@@ -54,10 +54,10 @@ INFO;
                   <div class="col-sm-2">
                     <img class="leftProfile" src="{$src}" /> {$current['name']}
                   </div>
-                  <div class="col-sm-9">
+                  <div class="col-sm-9" onclick="clickConnection(this)">
                     <h3>{$entry['name']}</h3>
                     <p>{$entry['employer']}</p>
-                    <p  id="email">{$entry['email']}</p>
+                    <p hidden class="email">{$entry['email']}</p>
                   </div>
                 </div>
 CONTACT;
@@ -67,10 +67,10 @@ CONTACT;
                   <div class="col-sm-2">
                     <img class="leftProfile" src="{$src}" />
                   </div>
-                  <div class="col-sm-9">
+                  <div class="col-sm-9" onclick="clickConnection(this)">
                     <h3>{$entry['name']}</h3>
                     <p>{$entry['school']}</p>
-                    <p id="email">{$entry['email']}</p>
+                    <p hidden class="email">{$entry['email']}</p>
                   </div>
                 </div>
 CONTACT;
@@ -197,8 +197,9 @@ PEOPLE;
                     <h3>Contact Information</h3>
                   </div>
                   <div class="modal-body">
-                    <h3>John Doe</h3>
-                    <p><b>Recruiter at Company</b></p>
+                    <h3 id = "contactLeftName"></h3>
+                    <p>Recruiter at <span id = "contactLeftCompany">Company</span></p>
+                    <p id = "contactLeftEmail"></p>
                     <p>Send an email:</p>
                     <textarea type = "text" style = "width: 100%; height: 10%"></textarea>
                     <button type="button" class="btn btn-default">Send Email</button>
@@ -252,7 +253,10 @@ function clickConnection(thing, side) {
             if (ajax.status === 200) {
                 let results = ajax.responseText.split(",");
                 if (side == "right"){
-                  loadModal(results);
+                  loadModalRight(results);
+                }
+                else{
+                  loadModalLeft(results);
                 }
 
             } else {
@@ -263,12 +267,18 @@ function clickConnection(thing, side) {
     ajax.send(null);
 }
 
-function loadModal(info){
+function loadModalRight(info){
   document.getElementById("contactRightName").innerHTML = info[0];
   document.getElementById("contactRightField").innerHTML = info[2];
   document.getElementById("contactRightCompany").innerHTML = info[3];
   document.getElementById("contactRightCollege").innerHTML = info[4];
   document.getElementById("contactRightSport").innerHTML = info[5];
+}
+
+function loadModalLeft(info){
+  document.getElementById("contactLeftName").innerHTML = info[0];
+  document.getElementById("contactLeftEmail").innerHTML = info[1];
+  document.getElementById("contactLeftCompany").innerHTML = info[3];
 }
 
           </script>
