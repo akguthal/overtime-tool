@@ -50,7 +50,7 @@ INFO;
             $contacts .= <<<CONTACT
                 <div class="row leftRow" onclick="clickConnection()">
                   <div class="col-sm-2">
-                    <img class="leftProfile" src="{$src}" /> $current['name']
+                    <img class="leftProfile" src="{$src}" /> {$current['name']}
                   </div>
                   <div class="col-sm-9">
                     <h3>{$entry['name']}</h3>
