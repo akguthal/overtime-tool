@@ -10,6 +10,7 @@ $body = <<<EOMID
     <script type="text/javascript" src="assets/js/bootstrap.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
+    <link rel="icon" href="img/OTLogo3.png" />
 
 
     <!-- Website Font style -->
@@ -20,7 +21,7 @@ $body = <<<EOMID
     <!-- Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
-    <title>OverTimeLogin</title>
+    <title>OverTime</title>
 </head>
 <body>
 
@@ -71,8 +72,8 @@ EOMID;
         $body.="<span style=\"color:red;\">Incorrect username or password.</span>";
     }
     $rest = <<< EOBOD
-                <div class="form-group ">                    
-                        <input type="submit" name="login" value="Sign in" class="login-button"></input>        
+                <div class="form-group ">
+                        <input type="submit" name="login" value="Sign in" class="login-button"></input>
                 </div>
                 </form>
             </div>

@@ -41,6 +41,11 @@ p{
   margin:0px;
 }
 
+.navbar{
+  background-color: #181132;
+  color: #000000;
+}
+
 #leftPanel{
   background-color: #810E13;
   height: 1000px;
@@ -90,8 +95,8 @@ p{
 }
 
 .rightProfile {
-  height: 150px;
-  width: 150px;
+  height: 100px;
+  width: 100px;
   border-radius: 50%;
   display: block;
   margin: auto;
