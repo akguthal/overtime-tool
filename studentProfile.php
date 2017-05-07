@@ -37,7 +37,8 @@ $body = <<<ENDOFDATA
     <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-    <title>studentProfile</title>
+    <link rel="icon" href="img/OTLogo3.png" />
+    <title>OverTime</title>
 </head>
 <body>
 <div>
@@ -58,9 +59,9 @@ $body = <<<ENDOFDATA
 <div class="container" >
     <div class="row">
         <h2><strong>Create Profile</strong></h2>
-        
+
         <div class="col-sm-5" align="right">
-      
+
             <div class="img-section"  >
                 <input type="image" id='img-upload' name="image" src="http://s3.amazonaws.com/37assets/svn/765-default-avatar.png" width="200" height="200"/>
                 <span class="fake-icon-edit" id="PicUpload" style="color: #ffffff;"><span class="glyphicon glyphicon-camera camera"></span></span>
@@ -70,7 +71,7 @@ $body = <<<ENDOFDATA
                      <input type="file" name="profile" id="imgInp" accept="image/*" style="visibility: hidden; display: block" >
                 </span>
             </div>
-            
+
         </div>
         <div class="col-sm-5" >
             <div class="info" >
@@ -137,7 +138,7 @@ $body = <<<ENDOFDATA
 
         </div>
     </div>
-    
+
 </div>
 </body>
 </html>
@@ -161,7 +162,7 @@ echo ($body);
         alert(str);
         document.write("<img src=\"" + str +"\" alt=\"image\">");
     }
-    
+
 </script>
 */
 ?>

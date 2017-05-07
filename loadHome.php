@@ -50,7 +50,7 @@ INFO;
             $contacts .= <<<CONTACT
                 <div class="row leftRow" onclick="clickConnection()">
                   <div class="col-sm-2">
-                    <img class="leftProfile" src="{$src}" />
+                    <img class="leftProfile" src="{$src}" /> $current['name']
                   </div>
                   <div class="col-sm-9">
                     <h3>{$entry['name']}</h3>
@@ -158,31 +158,19 @@ PEOPLE;
 
           <body>
             <nav class="navbar navbar-default" role="navigation" style = "margin-bottom: 0px; border:0px;">
-              <div class="navbar-header" style = "background-color: #181132">
-                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                      <span class="sr-only">Toggle navigation</span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                  </button>
+              <div class="navbar-header">
                   <a class="navbar-brand" href="#">
                     {$currentInfo}
                   </a>
               </div>
 
 
-              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style = "background-color: #181132; border:0px">
-                  <div class="pull-right">
-                      <form class="navbar-form" role="search" id = "searchBar">
-                          <div class="input-group">
-                              <input id = "search-bar" type="text" class="form-control" placeholder="Search by name, major, etc." name="q">
-                              <div class="input-group-btn">
-                                  <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                              </div>
-                          </div>
-                      </form>
-                  </div>
+              <div class="pull-right">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="Login.html"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                </ul>
               </div>
+
             </nav>
 
             <div class = "row full-content">

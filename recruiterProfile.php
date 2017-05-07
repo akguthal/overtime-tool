@@ -31,7 +31,8 @@ $body = <<<ENDOFDATA
     <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-    <title>recruiterProfile</title>
+    <link rel="icon" href="img/OTLogo3.png" />
+    <title>OverTime</title>
 </head>
 <body>
 <div>
@@ -70,7 +71,7 @@ $body = <<<ENDOFDATA
                 <input type="text" class="form-control" name="name" id="name" value="{$_SESSION['name']}" />
                 <br/>
                 <label>Company</label>
-                <input type="text" class="form-control" name="employer" id="employer" " 
+                <input type="text" class="form-control" name="employer" id="employer" "
 
                 <br/>
 
@@ -118,7 +119,7 @@ $body = <<<ENDOFDATA
                     <option value="Trainer">Personal Trainer/option>
                     <option value="Counselor">Guidance Counselor</option>
                     <option value="Police">Police</option>
-                
+
                 </select>
                 <br/>
                 <br/>
