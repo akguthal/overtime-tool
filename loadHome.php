@@ -130,7 +130,7 @@ CONTACT;
             $src = "data:image/jpeg;base64,".base64_encode($people[$email]['image']);
 
         $matches .= <<<PEOPLE
-            <div class = "col-md-2 rightBox">
+            <div class = "col-md-2 rightBox" onclick="clickConnection(this)">
                 <img class = "rightProfile" src = "{$src}" />
                 <p hidden>{$entry['email']}</p>
                 <h3>{$people[$email]['name']}</h3>
@@ -202,6 +202,34 @@ PEOPLE;
             </div>
 
           </body>
+          <script>
+             $(document).ready(main);
+
+function main() {    
+    console.log("main");
+    let ajax = new XMLHttpRequest();
+    ajax.open("GET", "loadHome.php", false);
+}
+
+function clickConnection(thing) {
+    let email = $(thing).find("p").text();
+    let ajax = new XMLHttpRequest();
+    let url = "getUserData.php?email=" + email;
+    ajax.open("GET", url, true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState === 4) {
+            if (ajax.status === 200) {
+                let results = ajax.responseText;
+                alert(results);
+            } else {
+               alert("Request Failed.");
+            }
+        }    
+    };
+    ajax.send(null);
+}
+
+          </script>
         </html>
 HTML;
 
