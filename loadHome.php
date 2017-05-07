@@ -177,7 +177,7 @@ PEOPLE;
 
     }
 
-    $html = <<<HTML
+    $html = <<<BODY
         <!DOCTYPE html>
         <html>
           <head>
@@ -316,7 +316,7 @@ function loadModalLeft(info){
 
           </script>
         </html>
-HTML;
+BODY;
 
     echo $html;
 ?>
