@@ -199,7 +199,7 @@ PEOPLE;
                   <div class="modal-body">
                     <h3 id = "contactLeftName"></h3>
                     <p>Recruiter at <span id = "contactLeftCompany">Company</span></p>
-                    <p id = "contactLeftEmail"></p>
+                    <p id = "contactLeftEmail" hidden></p>
                     <p>Send an email:</p>
                     <textarea type = "text" style = "width: 100%; height: 10%"></textarea>
                     <button type="button" class="btn btn-default">Send Email</button>
