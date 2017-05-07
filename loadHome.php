@@ -87,6 +87,7 @@ CONTACT;
         }
         
         $num_rows = $resultStudents->num_rows;
+        $num_rows_recruiter = 0;
     } else {
         $getStudents = "select * from studentImage where email not in (select studentEmail from studentRecruiterConnection where recruiterEmail='$loginEmail')";
         $getRecruiters = "select * from recruiterImage where email not in (select recruiterEmail1 from recruiterRecruiterConnection where recruiterEmail2='$loginEmail'
