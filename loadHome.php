@@ -256,7 +256,7 @@ PEOPLE;
                     <p id = "contactRightField">Field</p>
                     <p id = "contactRightCollege">College Name</p>
                     <p id = "contactRightSport">Sport</p>
-                    <p><button type="button" class="btn btn-default">Connect</button></p>
+                    <p><button type="button" class="btn btn-default" onClick="document.location.href='connect.php'">Connect</button></p>
                   </div>
                   <div class="modal-footer bluebg">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
