@@ -9,6 +9,7 @@
 		if($_POST['user'] == "student") {
 			$sqlQuery = sprintf("select password from studentAthlete where email = '%s'", $_POST["username"]);
 			$result = $db_connection->query($sqlQuery);
+			$_SESSION["email"] = $_POST["username"];
 			if ($result) {
 				$numberOfRows = mysqli_num_rows($result);
 				if ($numberOfRows == 0) {

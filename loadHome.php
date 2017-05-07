@@ -103,7 +103,6 @@ CONTACT;
         $resultAll->data_seek($row_index);
         $entry = $resultAll->fetch_array(MYSQLI_ASSOC);
         $total = 0;
-
         if (!$isStudent && in_array($entry["major"], $majorsFields[$current["profession"]]))
             $total = 30;
         else if ($isStudent && in_array($current["major"], $majorsFields[$entry["profession"]]))
