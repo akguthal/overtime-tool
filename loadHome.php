@@ -27,8 +27,10 @@
     $currentSrc = "data:image/jpeg;base64,".base64_encode($current['image']);
 
     $currentInfo = <<<INFO
+      <a class="navbar-brand" href="#">
         <img src='{$currentSrc}'/>
-        <p>{$current['name']}</p>
+      </a>
+      <p>{$current['name']}</p>
 INFO;
 
     //CONNECTIONS
@@ -48,27 +50,27 @@ INFO;
 
         if ($isStudent) {  //////////////////change image
             $contacts .= <<<CONTACT
-                <div class="row leftRow" onclick="clickConnection()">
+                <div class="row leftRow" onclick="clickConnection(this, 'left')" data-toggle="modal" data-target="#contactLeft">
                   <div class="col-sm-2">
                     <img class="leftProfile" src="{$src}" /> {$current['name']}
                   </div>
-                  <div class="col-sm-9">
+                  <div class="col-sm-9" onclick="clickConnection(this)">
                     <h3>{$entry['name']}</h3>
                     <p>{$entry['employer']}</p>
-                    <p hidden>{$entry['email']}</p>
+                    <p hidden class="email">{$entry['email']}</p>
                   </div>
                 </div>
 CONTACT;
         } else {
             $contacts .= <<<CONTACT
-                <div class="row leftRow" onclick="clickConnection()">
+                <div class="row leftRow" onclick="clickConnection(this, 'left')">
                   <div class="col-sm-2">
                     <img class="leftProfile" src="{$src}" />
                   </div>
-                  <div class="col-sm-9">
+                  <div class="col-sm-9" onclick="clickConnection(this)">
                     <h3>{$entry['name']}</h3>
                     <p>{$entry['school']}</p>
-                    <p hidden>{$entry['email']}</p>
+                    <p hidden class="email">{$entry['email']}</p>
                   </div>
                 </div>
 CONTACT;
@@ -162,9 +164,9 @@ CONTACT;
             $src = "data:image/jpeg;base64,".base64_encode($people[$email]['image']);
 
         $matches .= <<<PEOPLE
-            <div class = "col-md-2 rightBox">
+            <div class = "col-md-2 rightBox" onclick="clickConnection(this, 'right')" data-toggle="modal" data-target="#contactRight">
                 <img class = "rightProfile" src = "{$src}" />
-                <p hidden>{$entry['email']}</p>
+                <p class="email" hidden>{$people[$email]['email']}</p>
                 <h3>{$people[$email]['name']}</h3>
 PEOPLE;
         if ($isStudent)
@@ -191,15 +193,13 @@ PEOPLE;
           <body>
             <nav class="navbar navbar-default" role="navigation" style = "margin-bottom: 0px; border:0px;">
               <div class="navbar-header">
-                  <a class="navbar-brand" href="#">
-                    {$currentInfo}
-                  </a>
+                {$currentInfo}
               </div>
 
 
               <div class="pull-right">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="Login.html"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    <li><a href="Login.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 </ul>
               </div>
 
@@ -221,7 +221,99 @@ PEOPLE;
               </div>
             </div>
 
+            <div class="modal fade" id="contactLeft" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header redbg">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3>Contact Information</h3>
+                  </div>
+                  <div class="modal-body">
+                    <h3 id = "contactLeftName"></h3>
+                    <p>Recruiter at <span id = "contactLeftCompany">Company</span></p>
+                    <p id = "contactLeftEmail"></p>
+                    <p>Send an email:</p>
+                    <textarea type = "text" style = "width: 100%; height: 10%"></textarea>
+                    <button type="button" class="btn btn-default">Send Email</button>
+                  </div>
+                  <div class="modal-footer redbg">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal fade" id="contactRight" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header bluebg">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3>Contact Information</h3>
+                  </div>
+                  <div class="modal-body">
+                    <h3 id = "contactRightName"></h3>
+                    <p>Recruiter at <span id = "contactRightCompany">Company</span></p>
+                    <p id = "contactRightField">Field</p>
+                    <p id = "contactRightCollege">College Name</p>
+                    <p id = "contactRightSport">Sport</p>
+                    <p><button type="button" class="btn btn-default">Connect</button></p>
+                  </div>
+                  <div class="modal-footer bluebg">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </body>
+          <script>
+             $(document).ready(main);
+
+function main() {
+    console.log("main");
+    let ajax = new XMLHttpRequest();
+    ajax.open("GET", "loadHome.php", false);
+}
+
+function clickConnection(thing, side) {
+    let email = $(thing).find(".email").text();
+    let ajax = new XMLHttpRequest();
+    let url = "getUserData.php?email=" + email;
+    ajax.open("GET", url, true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState === 4) {
+            if (ajax.status === 200) {
+                let results = ajax.responseText.split(",");
+                if (side == "right"){
+                  loadModalRight(results);
+                }
+                else{
+                  loadModalLeft(results);
+                }
+
+            } else {
+               alert("Request Failed.");
+            }
+        }
+    };
+    ajax.send(null);
+}
+
+function loadModalRight(info){
+  document.getElementById("contactRightName").innerHTML = info[0];
+  document.getElementById("contactRightField").innerHTML = info[2];
+  document.getElementById("contactRightCompany").innerHTML = info[3];
+  document.getElementById("contactRightCollege").innerHTML = info[4];
+  document.getElementById("contactRightSport").innerHTML = info[5];
+}
+
+function loadModalLeft(info){
+  document.getElementById("contactLeftName").innerHTML = info[0];
+  document.getElementById("contactLeftEmail").innerHTML = info[1];
+  document.getElementById("contactLeftCompany").innerHTML = info[3];
+}
+
+          </script>
         </html>
 HTML;
 

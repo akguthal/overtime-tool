@@ -48,7 +48,8 @@ p{
 
 #leftPanel{
   background-color: #810E13;
-  height: 1000px;
+  height: 100%;
+  min-height: 100vh;
 }
 
 #leftHeader{
@@ -75,7 +76,8 @@ p{
 
 #rightPanel{
   background-color: #BBD1CE;
-  height: 1000px;
+  height: 100%;
+  min-height: 100vh;
   color: #000000;
 }
 
@@ -88,6 +90,7 @@ p{
 .rightBox{
   padding: 1em;
   transition: background-color 0.3s ease;
+  height: 17em;
 }
 
 .rightBox:hover{
