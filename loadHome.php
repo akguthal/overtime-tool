@@ -55,6 +55,7 @@ INFO;
                   <div class="col-sm-9">
                     <h3>{$entry['name']}</h3>
                     <p>{$entry['employer']}</p>
+                    <p hidden>{$entry['email']}</p>
                   </div>
                 </div>
 CONTACT;
@@ -67,6 +68,7 @@ CONTACT;
                   <div class="col-sm-9">
                     <h3>{$entry['name']}</h3>
                     <p>{$entry['school']}</p>
+                    <p hidden>{$entry['email']}</p>
                   </div>
                 </div>
 CONTACT;
@@ -92,7 +94,7 @@ CONTACT;
                     "Teacher"=>["Education", "Math", "History"], "Software Engineer"=>["Computer Scince"], "Engineer"=>["Engineering"], "PR"=>["Business", "Communication"],
                     "Athletic Trainer"=>["Sport Science"], "Personal Trainer"=>["Sport Science"], "Guidance Counselor"=>["Sociology"], "Police"=>["Criminal Justice"]);
     $east = ["Maryland", "Penn State", "Rutgers", "Michigan", "Michigan State", "Ohio State", "Indiana"];
-    $west = ["Iowa", "Wisonsin", "Nebraska", "Minnesota", "Northeastern". "Purdue", "Illinois"];
+    $west = ["Iowa", "Wisonsin", "Nebraska", "Minnesota", "Northwestern". "Purdue", "Illinois"];
 
 
     for ($row_index = 0; $row_index < $num_rows; $row_index++) {
@@ -130,6 +132,7 @@ CONTACT;
         $matches .= <<<PEOPLE
             <div class = "col-md-2 rightBox">
                 <img class = "rightProfile" src = "{$src}" />
+                <p hidden>{$entry['email']}</p>
                 <h3>{$people[$email]['name']}</h3>
 PEOPLE;
         if ($isStudent)
