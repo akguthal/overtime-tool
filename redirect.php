@@ -21,7 +21,7 @@
 						$_SESSION["wrong"] = "wrong";
 						header("Location: Login.php");
 					} else {
-						header("Location: home.html");
+						header("Location: loadHome.php");
 					}
 				}
 			} else {
@@ -40,7 +40,7 @@
 					if($password != hash('sha256', $_POST["password"])) {
 						$_SESSION["wrong"] = "wrong";
 						header("Location: Login.php");
-					} else header("Location: home.html");
+					} else header("Location: loadHome.php");
 				}
 			}
 		}
