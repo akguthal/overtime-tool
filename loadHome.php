@@ -16,14 +16,14 @@
         $result = $db_connection->query($query);
         $current = $result->fetch_assoc();
         $queryConnections = "select * from recruiterImage where email in (select recruiterEmail from studentRecruiterConnection where studentEmail='$loginEmail')";
-    
+
     } else {
         $query = "select * from recruiterImage where email='$loginEmail'";
-        $result = $db_connection->query($query); 
+        $result = $db_connection->query($query);
         $current = $result->fetch_assoc();
         $queryConnections = "select * from studentImage where email in (select studentEmail from studentRecruiterConnection where recruiterEmail='$loginEmail')";
     }
-    
+
     $currentSrc = "data:image/jpeg;base64,".base64_encode($current['image']);
 
     $currentInfo = <<<INFO
@@ -32,7 +32,7 @@
 INFO;
 
     //CONNECTIONS
-    
+
     $resultConnections = $db_connection->query($queryConnections);
     $num_rows = $resultConnections->num_rows;
     $contacts = "";
@@ -40,7 +40,7 @@ INFO;
     for ($row_index = 0; $row_index < $num_rows; $row_index++) {
         $resultConnections->data_seek($row_index);
         $entry = $resultConnections->fetch_array(MYSQLI_ASSOC);
-        
+
         if ($entry['image'] === null)
             $src = "img/profile.png";
         else
@@ -50,7 +50,7 @@ INFO;
             $contacts .= <<<CONTACT
                 <div class="row leftRow" onclick="clickConnection()">
                   <div class="col-sm-2">
-                    <img class="leftProfile" src="{$src}" /> 
+                    <img class="leftProfile" src="{$src}" />
                   </div>
                   <div class="col-sm-9">
                     <h3>{$entry['name']}</h3>
@@ -62,7 +62,7 @@ CONTACT;
             $contacts .= <<<CONTACT
                 <div class="row leftRow" onclick="clickConnection()">
                   <div class="col-sm-2">
-                    <img class="leftProfile" src="{$src}" /> 
+                    <img class="leftProfile" src="{$src}" />
                   </div>
                   <div class="col-sm-9">
                     <h3>{$entry['name']}</h3>
@@ -71,15 +71,15 @@ CONTACT;
                 </div>
 CONTACT;
         }
-    } 
+    }
     //SEARCH
 
     if ($isStudent) {
-        $getAll = "select * from recruiterImage where email not in (select recruiterEmail from studentRecruiterConnection where studentEmail='$loginEmail')"; 
+        $getAll = "select * from recruiterImage where email not in (select recruiterEmail from studentRecruiterConnection where studentEmail='$loginEmail')";
     } else {
-        $getAll = "select * from studentImage where email not in (select studentEmail from studentRecruiterConnection where recruiterEmail='$loginEmail') 
-        union select * from recruiter where email not in (select recruiterEmail1 from recruiterRecruiterConnection where recruiterEmail2='$loginEmail' 
-                                                            union select recruiterEmail2 from recruiterRecruiterConnection where recruiterEmail1='$loginEmail')";   
+        $getAll = "select * from studentImage where email not in (select studentEmail from studentRecruiterConnection where recruiterEmail='$loginEmail')
+        union select * from recruiter where email not in (select recruiterEmail1 from recruiterRecruiterConnection where recruiterEmail2='$loginEmail'
+                                                            union select recruiterEmail2 from recruiterRecruiterConnection where recruiterEmail1='$loginEmail')";
     }
 
     $resultAll = $db_connection->query($getAll);
@@ -93,13 +93,13 @@ CONTACT;
                     "Athletic Trainer"=>["Sport Science"], "Personal Trainer"=>["Sport Science"], "Guidance Counselor"=>["Sociology"], "Police"=>["Criminal Justice"]);
     $east = ["Maryland", "Penn State", "Rutgers", "Michigan", "Michigan State", "Ohio State", "Indiana"];
     $west = ["Iowa", "Wisonsin", "Nebraska", "Minnesota", "Northeastern". "Purdue", "Illinois"];
-    
-    
+
+
     for ($row_index = 0; $row_index < $num_rows; $row_index++) {
         $resultAll->data_seek($row_index);
         $entry = $resultAll->fetch_array(MYSQLI_ASSOC);
         $total = 0;
-        
+
         if (!$isStudent && in_array($entry["major"], $majorsFields[$current["profession"]]))
             $total = 30;
         else if ($isStudent && in_array($current["major"], $majorsFields[$entry["profession"]]))
@@ -107,12 +107,12 @@ CONTACT;
         if ($entry["school"] === $current["school"])
             $total += 20;
         else {
-            if ((in_array($entry["school"], $east) && in_array($current["school"], $east)) || (in_array($entry["school"], $west) && in_array($current["school"], $west))) 
+            if ((in_array($entry["school"], $east) && in_array($current["school"], $east)) || (in_array($entry["school"], $west) && in_array($current["school"], $west)))
                 $total += 8;
         }
         if ($entry["sport"] === $current["sport"])
             $total += 10;
-        
+
         $values[$entry["email"]] = $total;
         $people[$entry["email"]] = $entry;
     }
@@ -120,23 +120,23 @@ CONTACT;
     arsort($values);
     $index = 0;
     $matches = "";
-    
+
     foreach ($values as $email => $value) {
         if ($people[$email]['image'] === null)
             $src = "img/profile.png";
         else
             $src = "data:image/jpeg;base64,".base64_encode($people[$email]['image']);
-        
+
         $matches .= <<<PEOPLE
-            <div class = "col-md-3 rightBox">
+            <div class = "col-md-2 rightBox">
                 <img class = "rightProfile" src = "{$src}" />
                 <h3>{$people[$email]['name']}</h3>
 PEOPLE;
         if ($isStudent)
             $matches .= "<p>{$people[$email]['employer']}</p></div>";
         else
-            $matches .= "<p>{$people[$email]['school']}</p></div>";   
-             
+            $matches .= "<p>{$people[$email]['school']}</p></div>";
+
     }
 
     $html = <<<HTML
@@ -199,9 +199,8 @@ PEOPLE;
             </div>
 
           </body>
-        </html>    
+        </html>
 HTML;
 
     echo $html;
 ?>
-

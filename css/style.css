@@ -13,9 +13,6 @@ p{
   text-align: center;
 }
 
-#search-bar{
-
-}
 
 .navbar-brand{
   font-weight: 700;
@@ -98,4 +95,16 @@ p{
   border-radius: 50%;
   display: block;
   margin: auto;
+}
+
+.modal-body *{
+  color: #000000;
+}
+
+.redbg{
+  background-color: #810E13;
+}
+
+.bluebg{
+  background-color: #313737;
 }
