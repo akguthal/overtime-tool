@@ -95,7 +95,7 @@ INFO;
             $contacts .= <<<CONTACT
                 <div class="row leftRow" onclick="clickConnection(this, 'left')" data-toggle="modal" data-target="#contactLeft">
                   <div class="col-sm-2">
-                    <img class="leftProfile" src="{$src}" /> {$current['name']}
+                    <img class="leftProfile" src="{$src}" />
                   </div>
                   <div class="col-sm-9" onclick="clickConnection(this)">
                     <h3>{$entry['name']}</h3>
@@ -129,12 +129,12 @@ CONTACT;
         if (!$resultStudents) {
             die("Retrieval failed: ". $db_connection->error);
         }
-        
+
         $num_rows = $resultStudents->num_rows;
         $num_rows_recruiter = 0;
     } else {
         $getStudents = "select * from studentImage where email not in (select studentEmail from studentRecruiterConnection where recruiterEmail='$loginEmail')";
-        $getRecruiters = "select * from recruiterImage where email != '{$loginEmail}' and email not in 
+        $getRecruiters = "select * from recruiterImage where email != '{$loginEmail}' and email not in
                                                             (select recruiterEmail1 from recruiterRecruiterConnection where recruiterEmail2='$loginEmail'
                                                             union select recruiterEmail2 from recruiterRecruiterConnection where recruiterEmail1='$loginEmail')";
         $resultStudents = $db_connection->query($getStudents);
@@ -143,14 +143,14 @@ CONTACT;
         if (!$resultStudents || !$resultRecruiters) {
             die("Retrieval failed: ". $db_connection->error);
         }
-        
+
         $num_rows = $resultStudents->num_rows;
         $num_rows_recruiter = $resultRecruiters->num_rows;
     }
 
     $values = array();
     $majorsFields = array("PR"=>["Business", "Communication"], "Marketing"=>["Business", "Communication"], "Finance"=>["Business"], "Sales"=>["Business", "Communication"],
-                            "Teacher"=>["Education", "Math", "History"], "Software Engineer"=>["Computer Scince"], "Engineer"=>["Engineering"], 
+                            "Teacher"=>["Education", "Math", "History"], "Software Engineer"=>["Computer Scince"], "Engineer"=>["Engineering"],
                             "Athletic Trainer"=>["Sport Science"], "Personal Trainer"=>["Sport Science"], "Guidance Counselor"=>["Sociology"], "Police"=>["Criminal Justice"]);
     $east = ["Maryland", "Penn State", "Rutgers", "Michigan", "Michigan State", "Ohio State", "Indiana"];
     $west = ["Iowa", "Wisonsin", "Nebraska", "Minnesota", "Northwestern". "Purdue", "Illinois"];
@@ -348,7 +348,7 @@ function clickConnection(thing, side) {
 function connect(ths) {
     let ajax = new XMLHttpRequest();
     let name = $(ths).parent().parent().find("h3").text();
-    let email = $(ths).parent().prev().text(); 
+    let email = $(ths).parent().prev().text();
     let url = "email.php?name=" + name + "&email=" + email;
     console.log(url);
     ajax.open("GET", url, true);
