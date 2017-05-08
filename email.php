@@ -1,7 +1,7 @@
 <?php
 session_start();
 require 'C:\xampp\htdocs\PHPMailer_5.2.0\class.phpmailer.php';
-$to = "anthonypingelli@gmail.com";
+$to = "nicole27328@gmail.com";
 $name = $_GET['name'];
 $email = $_GET['email'];
 $from = $_SESSION['name'];
