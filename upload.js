@@ -63,7 +63,7 @@ function saveImage() {
     formData.append("file", image);
     xhr.send(formData);
     xhr.onload = function() {
-        alert(xhr.responseText); //test the returned info from PHP.
+        //alert(xhr.responseText); //test the returned info from PHP.
         if (xhr.responseText != "") {
 
         }
