@@ -9,21 +9,22 @@
     }
 
     $currentEmail = $_SESSION['email'];
-    $connectionEmail = "ajones@.com";//$_SESSION['email'];
-    $isStudent = true;//$_SESSION['isStudent'];
+    $connectionEmail = $_GET['email'];
+    $isStudent = $_SESSION['isStudent'];
     
     if ($isStudent) {
         $query = "insert into studentRecruiterConnection(studentEmail, recruiterEmail) values('{$currentEmail}', '{$connectionEmail}')";
     } else {
         $query = "select * from studentAthlete where email='{$connectionEmail}'";
-    }
+
         $result = $db_connection->query($query);
 
-        if (!$result) {
+        if ($result->num_rows === 0) {
             $query = "insert into recruiterRecruiterConnection(recruiterEmail1, recruiterEmail2) values('{$currentEmail}', '{$connectionEmail}')";    
         } else {
             $query = "insert into studentRecruiterConnection(studentEmail, recruiterEmail) values('{$connectionEmail}', '{$currentEmail}')";
         }
+    }
     
 
     if (!$db_connection->query($query))

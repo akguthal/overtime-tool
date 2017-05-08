@@ -22,8 +22,51 @@
         $result = $db_connection->query($query);
         $current = $result->fetch_assoc();
         $queryConnections = "select * from studentImage where email in (select studentEmail from studentRecruiterConnection where recruiterEmail='$loginEmail')";
+        $queryConnectionsRecruiter = "select * from recruiterImage where email in (select recruiterEmail1 from recruiterRecruiterConnection where recruiterEmail2='$loginEmail'
+                                                            union select recruiterEmail2 from recruiterRecruiterConnection where recruiterEmail1='$loginEmail')";
+        $resultConnectionsRecruiter = $db_connection->query($queryConnectionsRecruiter);
+        $num_rows = $resultConnectionsRecruiter->num_rows;
+
+        for ($row_index = 0; $row_index < $num_rows; $row_index++) {
+            $resultConnectionsRecruiter->data_seek($row_index);
+            $entry = $resultConnectionsRecruiter->fetch_array(MYSQLI_ASSOC);
+
+            if ($entry['image'] === null)
+                $src = "img/profile.png";
+            else
+                $src = "data:image/jpeg;base64,".base64_encode($entry['image']);
+
+            if ($isStudent) {  //////////////////change image
+                $contacts .= <<<CONTACT
+                    <div class="row leftRow" onclick="clickConnection(this, 'left')" data-toggle="modal" data-target="#contactLeft">
+                      <div class="col-sm-2">
+                        <img class="leftProfile" src="{$src}" /> {$current['name']}
+                      </div>
+                      <div class="col-sm-9" onclick="clickConnection(this)">
+                        <h3>{$entry['name']}</h3>
+                        <p>{$entry['employer']}</p>
+                        <p hidden class="email">{$entry['email']}</p>
+                      </div>
+                    </div>
+CONTACT;
+            } else {
+                $contacts .= <<<CONTACT
+                    <div class="row leftRow" onclick="clickConnection(this, 'left')">
+                      <div class="col-sm-2">
+                        <img class="leftProfile" src="{$src}" />
+                      </div>
+                      <div class="col-sm-9" onclick="clickConnection(this)">
+                        <h3>{$entry['name']}</h3>
+                        <p>{$entry['school']}</p>
+                        <p hidden class="email">{$entry['email']}</p>
+                      </div>
+                    </div>
+CONTACT;
+            }
+        }
     }
 
+    $_SESSION['name'] = $current['name'];
     $currentSrc = "data:image/jpeg;base64,".base64_encode($current['image']);
 
     $currentInfo = <<<INFO
@@ -52,7 +95,7 @@ INFO;
             $contacts .= <<<CONTACT
                 <div class="row leftRow" onclick="clickConnection(this, 'left')" data-toggle="modal" data-target="#contactLeft">
                   <div class="col-sm-2">
-                    <img class="leftProfile" src="{$src}" /> {$current['name']}
+                    <img class="leftProfile" src="{$src}" />
                   </div>
                   <div class="col-sm-9" onclick="clickConnection(this)">
                     <h3>{$entry['name']}</h3>
@@ -76,6 +119,7 @@ CONTACT;
 CONTACT;
         }
     }
+
     //SEARCH
 
     if ($isStudent) {
@@ -85,12 +129,13 @@ CONTACT;
         if (!$resultStudents) {
             die("Retrieval failed: ". $db_connection->error);
         }
-        
+
         $num_rows = $resultStudents->num_rows;
         $num_rows_recruiter = 0;
     } else {
         $getStudents = "select * from studentImage where email not in (select studentEmail from studentRecruiterConnection where recruiterEmail='$loginEmail')";
-        $getRecruiters = "select * from recruiterImage where email not in (select recruiterEmail1 from recruiterRecruiterConnection where recruiterEmail2='$loginEmail'
+        $getRecruiters = "select * from recruiterImage where email != '{$loginEmail}' and email not in
+                                                            (select recruiterEmail1 from recruiterRecruiterConnection where recruiterEmail2='$loginEmail'
                                                             union select recruiterEmail2 from recruiterRecruiterConnection where recruiterEmail1='$loginEmail')";
         $resultStudents = $db_connection->query($getStudents);
         $resultRecruiters = $db_connection->query($getRecruiters);
@@ -98,14 +143,14 @@ CONTACT;
         if (!$resultStudents || !$resultRecruiters) {
             die("Retrieval failed: ". $db_connection->error);
         }
-        
+
         $num_rows = $resultStudents->num_rows;
         $num_rows_recruiter = $resultRecruiters->num_rows;
     }
 
     $values = array();
     $majorsFields = array("PR"=>["Business", "Communication"], "Marketing"=>["Business", "Communication"], "Finance"=>["Business"], "Sales"=>["Business", "Communication"],
-                            "Teacher"=>["Education", "Math", "History"], "Software Engineer"=>["Computer Scince"], "Engineer"=>["Engineering"], 
+                            "Teacher"=>["Education", "Math", "History"], "Software Engineer"=>["Computer Scince"], "Engineer"=>["Engineering"],
                             "Athletic Trainer"=>["Sport Science"], "Personal Trainer"=>["Sport Science"], "Guidance Counselor"=>["Sociology"], "Police"=>["Criminal Justice"]);
     $east = ["Maryland", "Penn State", "Rutgers", "Michigan", "Michigan State", "Ohio State", "Indiana"];
     $west = ["Iowa", "Wisonsin", "Nebraska", "Minnesota", "Northwestern". "Purdue", "Illinois"];
@@ -231,10 +276,9 @@ PEOPLE;
                   <div class="modal-body">
                     <h3 id = "contactLeftName"></h3>
                     <p>Recruiter at <span id = "contactLeftCompany">Company</span></p>
-                    <p id = "contactLeftEmail"></p>
-                    <p>Send an email:</p>
-                    <textarea type = "text" style = "width: 100%; height: 10%"></textarea>
-                    <button type="button" class="btn btn-default">Send Email</button>
+                    <p id = "contactLeftEmail" hidden></p>
+                    <textarea id = "contactLeftMessage" type = "text" style = "width: 100%; height: 10%"></textarea>
+                    <p><button type="button" class="btn btn-default" onClick="sendRecruiterEmail(this)">Send Email</button></p>
                   </div>
                   <div class="modal-footer redbg">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -256,7 +300,8 @@ PEOPLE;
                     <p id = "contactRightField">Field</p>
                     <p id = "contactRightCollege">College Name</p>
                     <p id = "contactRightSport">Sport</p>
-                    <p><button type="button" class="btn btn-default" onClick="document.location.href='connect.php'">Connect</button></p>
+                    <p id = "contactRightEmail" hidden>Email</p>
+                    <p><button type="button" class="btn btn-default" onClick="connect(this)">Connect</button></p>
                   </div>
                   <div class="modal-footer bluebg">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -299,8 +344,51 @@ function clickConnection(thing, side) {
     ajax.send(null);
 }
 
+function connect(ths) {
+    let ajax = new XMLHttpRequest();
+    let name = $(ths).parent().parent().find("h3").text();
+    let email = $(ths).parent().prev().text();
+    let url = "connectEmail.php?name=" + name + "&email=" + email;
+    console.log(url);
+    ajax.open("GET", url, true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState === 4) {
+            if (ajax.status === 200) {
+                alert("Connection request has been sent!");
+                $("#contactRight").modal("hide");
+            } else {
+               alert("Connection failed.");
+            }
+        }
+    };
+    ajax.send();
+}
+
+function sendRecruiterEmail(ths) {
+    let ajax = new XMLHttpRequest();
+    let name = $(ths).parent().parent().find("h3").text();
+    let email = $(ths).parent().prev().text();
+    let message = $("#contactLeftMessage").val();
+    alert(message);
+    let url = "sendRecruiterEmail.php?name=" + name + "&email=" + email + "&message=" + message;
+    ajax.open("GET", url, true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState === 4) {
+            if (ajax.status === 200) {
+                alert("Email message has been sent!");
+                $("#contactLeftMessage").val("");
+                $("#contactLeft").modal("hide");
+            } else {
+               alert("Connection failed.");
+            }
+        }
+    };
+    ajax.send();
+}
+
 function loadModalRight(info){
   document.getElementById("contactRightName").innerHTML = info[0];
+  document.getElementById("contactRightEmail").innerHTML = info[1];
   document.getElementById("contactRightField").innerHTML = info[2];
   document.getElementById("contactRightCompany").innerHTML = info[3];
   document.getElementById("contactRightCollege").innerHTML = info[4];
