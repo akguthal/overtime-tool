@@ -28,20 +28,20 @@ insert into studentAthlete(name, email, school, major, yearsInSchool, sport, pas
 
 create table recruiter(name char(30) not null, email char(30) primary key, profession char(30) not null, employer char(30) not null, school char(20) not null,  sport char(30) not null, password char(255) not null);
 insert into recruiter(name, email, profession, employer, school, sport, password) values("Rebecca Ply", "rply@facebook.com", "Police", "Facebook", "Maryland", "Basketball", "example");
-insert into recruiter(name, email, profession, employer, school, sport, password) values("Jane Doe", "janedoe@aol.com", "Marketing", "Company", "Michigan State", "Lacrosse", "jane");
-insert into recruiter(name, email, profession, employer, school, sport, password) values("John Smith", "johnsmith@gmail.com", "Marketing", "Some marketing company", "Maryland", "Baseball", "john");
-insert into recruiter(name, email, profession, employer, school, sport, password) values("Kurt Gary", "kgary@gmail.com", "PR", "ABC", "Purdue", "Baseball", "a");
-insert into recruiter(name, email, profession, employer, school, sport, password) values("Mark Johnson", "mjohnson@gmail.com", "Teacher", "ABC", "Nebraska", "Basketball", "b");
-insert into recruiter(name, email, profession, employer, school, sport, password) values("Josh Riley", "jriley@gmail.com", "Teacher", "ABC", "Iowa", "Football", "c");
-insert into recruiter(name, email, profession, employer, school, sport, password) values("Patrick Monroe", "pmonroe@gmail.com", "Finance", "ABC", "Rutgers", "Soccer", "d");
-insert into recruiter(name, email, profession, employer, school, sport, password) values("Derek Drake", "ddrake@gmail.com", "Teacher", "ABC", "Maryland", "Soccer", "e");
-insert into recruiter(name, email, profession, employer, school, sport, password) values("Darrien Swoot", "dswoot@gmail.com", "PR", "ABC", "Rutgers", "Basketball", "f");
-insert into recruiter(name, email, profession, employer, school, sport, password) values("Adam Jones", "ajones@gmail.com", "PR", "ABC", "Penn State", "Football", "g");
-insert into recruiter(name, email, profession, employer, school, sport, password) values("Marissa Lin", "mlin@gmail.com", "Teacher", "ABC", "Maryland", "Soccer", "h");
-insert into recruiter(name, email, profession, employer, school, sport, password) values("Jose Bernard", "jbernard@gmail.com", "PR", "ABC", "Michigan", "Basketball", "i");
-insert into recruiter(name, email, profession, employer, school, sport, password) values("Witney Elton", "welton@gmail.com", "Finance", "ABC", "Northeastern", "Football", "j");
-insert into recruiter(name, email, profession, employer, school, sport, password) values("Karen Xi", "kxi@gmail.com", "Engineer", "ABC", "Michigan State", "Baseball", "k");
-insert into recruiter(name, email, profession, employer, school, sport, password) values("Norris Green", "ngreen@gmail.com", "Engineer", "ABC", "Minnestoa", "Football", "l");
+insert into recruiter(name, email, profession, employer, school, sport, password) values("Jane Doe", "janedoe@aol.com", "Marketing", "Edelman", "Michigan State", "Lacrosse", "jane");
+insert into recruiter(name, email, profession, employer, school, sport, password) values("John Smith", "johnsmith@gmail.com", "Marketing", "W2O Group", "Maryland", "Baseball", "john");
+insert into recruiter(name, email, profession, employer, school, sport, password) values("Kurt Gary", "kgary@gmail.com", "PR", "APCO Worldwide", "Purdue", "Baseball", "a");
+insert into recruiter(name, email, profession, employer, school, sport, password) values("Mark Johnson", "mjohnson@gmail.com", "Teacher", "UMD Department of Computer Science", "Nebraska", "Basketball", "b");
+insert into recruiter(name, email, profession, employer, school, sport, password) values("Josh Riley", "jriley@gmail.com", "Teacher", "Chester Academy", "Iowa", "Football", "c");
+insert into recruiter(name, email, profession, employer, school, sport, password) values("Patrick Monroe", "pmonroe@gmail.com", "Finance", "Morgan Stanley", "Rutgers", "Soccer", "d");
+insert into recruiter(name, email, profession, employer, school, sport, password) values("Derek Drake", "ddrake@gmail.com", "Teacher", "Harvard Law School", "Maryland", "Soccer", "e");
+insert into recruiter(name, email, profession, employer, school, sport, password) values("Darrien Swoot", "dswoot@gmail.com", "PR", "Finn Partners", "Rutgers", "Basketball", "f");
+insert into recruiter(name, email, profession, employer, school, sport, password) values("Adam Jones", "ajones@gmail.com", "PR", "Racepoint Global", "Penn State", "Football", "g");
+insert into recruiter(name, email, profession, employer, school, sport, password) values("Marissa Lin", "mlin@gmail.com", "Teacher", "Minisink Valley High School", "Maryland", "Soccer", "h");
+insert into recruiter(name, email, profession, employer, school, sport, password) values("Jose Bernard", "jbernard@gmail.com", "PR", "Edelman", "Michigan", "Basketball", "i");
+insert into recruiter(name, email, profession, employer, school, sport, password) values("Witney Elton", "welton@gmail.com", "Finance", "J.P. Morgan", "Northeastern", "Football", "j");
+insert into recruiter(name, email, profession, employer, school, sport, password) values("Karen Xi", "kxi@gmail.com", "Engineer", "Clarke Engineering", "Michigan State", "Baseball", "k");
+insert into recruiter(name, email, profession, employer, school, sport, password) values("Norris Green", "ngreen@gmail.com", "Engineer", "Northrop Grumman", "Minnestoa", "Football", "l");
 
 create table studentRecruiterConnection(studentEmail char(30) not null,  recruiterEmail char(30) not null,  status enum('connected', 'pending'  ) not null);
 insert into studentRecruiterConnection(studentEmail, recruiterEmail, status) values("melotrimble@gmail.com", "example@something.com", "connected");
