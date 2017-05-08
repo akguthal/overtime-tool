@@ -1,7 +1,7 @@
 <?php
 session_start();
-require '/opt/lampp/htdocs/PHPMailer_5.2.0/class.phpmailer.php';
-require '/opt/lampp/htdocs/PHPMailer_5.2.0/class.smtp.php';
+require '/Applications/XAMPP/htdocs/PHPMailer-master/class.phpmailer.php';
+require '/Applications/XAMPP/htdocs/PHPMailer-master/class.smtp.php';
 $name = $_GET['name'];
 $email = $_GET['email'];
 $message = $_GET['message'];
@@ -19,7 +19,7 @@ $mail->SMTPSecure = 'tls';                            // Enable encryption, 'ssl
 
 $mail->From = 'overtimemailserver@gmail.com';
 $mail->FromName = 'OverTime Inc.';
-$mail->addAddress("akguthal@gmail.com");     // Add a recipient
+$mail->addAddress($email);     // Add a recipient
             // Name is optional
 // Set word wrap to 50 characters
 $mail->Port = 25;
@@ -30,7 +30,7 @@ $mail->Subject = "New message from {$from} on OverTime!";
 $body = "Hello {$name},\n\n";
 $body.= "{$from} sent you the following message on OverTime:";
 $body.= "\n\n{$message}\n\n";
-$body.= "If you would like to respond to this message, login to OverTime at http://localhost/overtime-tool/Login.php";
+$body.= "If you would like to respond to this message, login to OverTime at http://localhost/cmsc389n/overtime-tool/Login.php";
 
 $body = nl2br($body);
 $mail->MsgHTML($body);
