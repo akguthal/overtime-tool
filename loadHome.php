@@ -244,7 +244,7 @@ PEOPLE;
 
               <div class="pull-right">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="Login.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    <li><a href="Logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 </ul>
               </div>
 

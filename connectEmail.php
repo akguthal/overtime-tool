@@ -1,11 +1,12 @@
 <?php
 session_start();
-require '/opt/lampp/htdocs/PHPMailer_5.2.0/class.phpmailer.php';
-require '/opt/lampp/htdocs/PHPMailer_5.2.0/class.smtp.php';
+require '/Applications/XAMPP/htdocs/PHPMailer-master/class.phpmailer.php';
+require '/Applications/XAMPP/htdocs/PHPMailer-master/class.smtp.php';
 $name = $_GET['name'];
 $email = $_GET['email'];
 echo $email;
 $from = $_SESSION['name'];
+$fromEmail = $_SESSION['email'];
 
 $mail = new PHPMailer;
 
@@ -18,7 +19,7 @@ $mail->SMTPSecure = 'tls';                            // Enable encryption, 'ssl
 
 $mail->From = 'overtimemailserver@gmail.com';
 $mail->FromName = 'OverTime Inc.';
-$mail->addAddress("akguthal@gmail.com");     // Add a recipient
+$mail->addAddress($email);     // Add a recipient
             // Name is optional
 // Set word wrap to 50 characters
 $mail->Port = 25;
@@ -26,7 +27,7 @@ $mail->isHTML(true);                                  // Set email format to HTM
 
 $mail->Subject = "Connect with {$from} on OverTime!";
 
-$url = "http://localhost/overtime-tool/connect.php?email={$email}";
+$url = "http://localhost/cmsc389n/overtime-tool/connect.php?email={$fromEmail}";
 $body = "Hello {$name},\n\nYou have a new connection request on OverTime! Use the link below to connect with {$from}. If you do not want to connect with {$from}, please disregard this email.";
 $body.= "\n{$url}";
 $body = nl2br($body);
