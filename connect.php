@@ -30,5 +30,19 @@
     if (!$db_connection->query($query))
         die("Retrieval failed: ". $db_connection->error);
 
+    $query = "select * from studentImage where email={$connectionEmail}";
+    $result = $db_connection->query($query);
+
+    if ($result->num_rows === 0) {
+        $query = "select * from recruiterImage where email={$connectionEmail}";    
+        $result = $db_connection->query($query);
+        $new = $result->fetch_assoc();
+    } else {
+        $new = $result->fetch_assoc();
+    }
+
+    $_SESSION['email'] = $new['email'];
+    $_SESSION['name'] = $new['name'];
+
     header("Location: loadHome.php");
 ?>
