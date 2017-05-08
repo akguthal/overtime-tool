@@ -2,8 +2,6 @@
 <?php
 session_start();
 
-print_r($_SESSION);
-
 if(isset($_POST["submit"])) {
     $_SESSION["name"] = $_POST["name"];
     $_SESSION["year"] = $_POST["year"];
@@ -48,10 +46,10 @@ $body = <<<ENDOFDATA
                 <img class="logo-img" src="img/OTLogo2.png" width="120" height="50" align="top">
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="home.html">Home</a></li>
+                <li class="active"><a href="loadHome.php">Home</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="Login.html"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                <li><a href="Login.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
         </div>
     </nav>
@@ -86,9 +84,9 @@ $body = <<<ENDOFDATA
                     <option value="Northwestern">Northwestern University</option>
                     <option value="Wisconsin">Wisconsin University</option>
                     <option value="Illinois">University of Illinois</option>
-                    <option value="PennState">Penn State University</option>
+                    <option value="Penn State">Penn State University</option>
                     <option value="Ohio"> Ohio State University</option>
-                    <option value="MichiganState">Michigan State University </option>
+                    <option value="Michigan State">Michigan State University </option>
                     <option value="Purdue">Purdue University</option>
                     <option value="Minnesota">University of Minnesota</option>
                     <option value="Indiana">Indiana University</option>

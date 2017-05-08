@@ -6,9 +6,12 @@
         if ($db_connection->connect_error) {
             die($db_connection->connect_error);
         }        
+        $_SESSION['email'] = $_POST['username'];
 		if($_POST['user'] == "student") {
+            $_SESSION['isStudent'] = true;
 			$sqlQuery = sprintf("select password from studentAthlete where email = '%s'", $_POST["username"]);
 			$result = $db_connection->query($sqlQuery);
+			$_SESSION["email"] = $_POST["username"];
 			if ($result) {
 				$numberOfRows = mysqli_num_rows($result);
 				if ($numberOfRows == 0) {
@@ -20,14 +23,14 @@
 					if($password != hash('sha256', $_POST["password"])) {
 						$_SESSION["wrong"] = "wrong";
 						header("Location: Login.php");
-					} else {
+					} else 
 						header("Location: loadHome.php");
-					}
 				}
 			} else {
 				die($db_connection->mysqli_error($db_connection));
 			}
 		} else if($_POST['user'] == "recruiter") {
+            $_SESSION['isStudent'] = false;
 			$sqlQuery2 = sprintf("select password from recruiter where email = '%s'", $_POST["username"]);
 			$result2 = $db_connection->query($sqlQuery2);
 			if($result2) {
@@ -40,7 +43,8 @@
 					if($password != hash('sha256', $_POST["password"])) {
 						$_SESSION["wrong"] = "wrong";
 						header("Location: Login.php");
-					} else header("Location: loadHome.php");
+					} else 
+                        header("Location: loadHome.php");
 				}
 			}
 		}
