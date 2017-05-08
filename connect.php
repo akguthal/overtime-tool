@@ -9,13 +9,14 @@
     }
 
     $currentEmail = $_SESSION['email'];
-    $connectionEmail = "ajones@gmail.com";//$_SESSION['email'];
+    $connectionEmail = "ajones@.com";//$_SESSION['email'];
     $isStudent = true;//$_SESSION['isStudent'];
     
     if ($isStudent) {
         $query = "insert into studentRecruiterConnection(studentEmail, recruiterEmail) values('{$currentEmail}', '{$connectionEmail}')";
     } else {
         $query = "select * from studentAthlete where email='{$connectionEmail}'";
+    }
         $result = $db_connection->query($query);
 
         if (!$result) {
@@ -23,7 +24,7 @@
         } else {
             $query = "insert into studentRecruiterConnection(studentEmail, recruiterEmail) values('{$connectionEmail}', '{$currentEmail}')";
         }
-    }
+    
 
     if (!$db_connection->query($query))
         die("Retrieval failed: ". $db_connection->error);

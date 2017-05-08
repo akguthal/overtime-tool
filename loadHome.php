@@ -115,7 +115,6 @@ CONTACT;
         $resultStudents->data_seek($row_index);
         $entry = $resultStudents->fetch_array(MYSQLI_ASSOC);
         $total = 0;
-
         if (!$isStudent && in_array($entry["major"], $majorsFields[$current["profession"]]))
             $total = 30;
         else if ($isStudent && in_array($current["major"], $majorsFields[$entry["profession"]]))
@@ -177,7 +176,7 @@ PEOPLE;
 
     }
 
-    $html = <<<HTML
+    $html = <<<BODY
         <!DOCTYPE html>
         <html>
           <head>
@@ -257,7 +256,7 @@ PEOPLE;
                     <p id = "contactRightField">Field</p>
                     <p id = "contactRightCollege">College Name</p>
                     <p id = "contactRightSport">Sport</p>
-                    <p><button type="button" class="btn btn-default">Connect</button></p>
+                    <p><button type="button" class="btn btn-default" onClick="document.location.href='connect.php'">Connect</button></p>
                   </div>
                   <div class="modal-footer bluebg">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -316,7 +315,7 @@ function loadModalLeft(info){
 
           </script>
         </html>
-HTML;
+BODY;
 
     echo $html;
 ?>
