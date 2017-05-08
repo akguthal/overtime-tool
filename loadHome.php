@@ -24,6 +24,46 @@
         $queryConnections = "select * from studentImage where email in (select studentEmail from studentRecruiterConnection where recruiterEmail='$loginEmail')";
         $queryConnectionsRecruiter = "select * from recruiterImage where email in (select recruiterEmail1 from recruiterRecruiterConnection where recruiterEmail2='$loginEmail'
                                                             union select recruiterEmail2 from recruiterRecruiterConnection where recruiterEmail1='$loginEmail')";
+        $resultConnectionsRecruiter = $db_connection->query($queryConnectionsRecruiter);
+        $num_rows = $resultConnectionsRecruiter->num_rows;
+
+        for ($row_index = 0; $row_index < $num_rows; $row_index++) {
+            $resultConnectionsRecruiter->data_seek($row_index);
+            $entry = $resultConnectionsRecruiter->fetch_array(MYSQLI_ASSOC);
+
+            if ($entry['image'] === null)
+                $src = "img/profile.png";
+            else
+                $src = "data:image/jpeg;base64,".base64_encode($entry['image']);
+
+            if ($isStudent) {  //////////////////change image
+                $contacts .= <<<CONTACT
+                    <div class="row leftRow" onclick="clickConnection(this, 'left')" data-toggle="modal" data-target="#contactLeft">
+                      <div class="col-sm-2">
+                        <img class="leftProfile" src="{$src}" /> {$current['name']}
+                      </div>
+                      <div class="col-sm-9" onclick="clickConnection(this)">
+                        <h3>{$entry['name']}</h3>
+                        <p>{$entry['employer']}</p>
+                        <p hidden class="email">{$entry['email']}</p>
+                      </div>
+                    </div>
+CONTACT;
+            } else {
+                $contacts .= <<<CONTACT
+                    <div class="row leftRow" onclick="clickConnection(this, 'left')">
+                      <div class="col-sm-2">
+                        <img class="leftProfile" src="{$src}" />
+                      </div>
+                      <div class="col-sm-9" onclick="clickConnection(this)">
+                        <h3>{$entry['name']}</h3>
+                        <p>{$entry['school']}</p>
+                        <p hidden class="email">{$entry['email']}</p>
+                      </div>
+                    </div>
+CONTACT;
+            }
+        }
     }
 
     $_SESSION['name'] = $current['name'];
@@ -80,47 +120,6 @@ CONTACT;
         }
     }
 
-    $resultConnectionsRecruiter = $db_connection->query($queryConnectionsRecruiter);
-    $num_rows = $resultConnectionsRecruiter->num_rows;
-
-    for ($row_index = 0; $row_index < $num_rows; $row_index++) {
-        $resultConnectionsRecruiter->data_seek($row_index);
-        $entry = $resultConnectionsRecruiter->fetch_array(MYSQLI_ASSOC);
-
-        if ($entry['image'] === null)
-            $src = "img/profile.png";
-        else
-            $src = "data:image/jpeg;base64,".base64_encode($entry['image']);
-
-        if ($isStudent) {  //////////////////change image
-            $contacts .= <<<CONTACT
-                <div class="row leftRow" onclick="clickConnection(this, 'left')" data-toggle="modal" data-target="#contactLeft">
-                  <div class="col-sm-2">
-                    <img class="leftProfile" src="{$src}" /> {$current['name']}
-                  </div>
-                  <div class="col-sm-9" onclick="clickConnection(this)">
-                    <h3>{$entry['name']}</h3>
-                    <p>{$entry['employer']}</p>
-                    <p hidden class="email">{$entry['email']}</p>
-                  </div>
-                </div>
-CONTACT;
-        } else {
-            $contacts .= <<<CONTACT
-                <div class="row leftRow" onclick="clickConnection(this, 'left')">
-                  <div class="col-sm-2">
-                    <img class="leftProfile" src="{$src}" />
-                  </div>
-                  <div class="col-sm-9" onclick="clickConnection(this)">
-                    <h3>{$entry['name']}</h3>
-                    <p>{$entry['school']}</p>
-                    <p hidden class="email">{$entry['email']}</p>
-                  </div>
-                </div>
-CONTACT;
-        }
-    }
-
     //SEARCH
 
     if ($isStudent) {
@@ -135,7 +134,8 @@ CONTACT;
         $num_rows_recruiter = 0;
     } else {
         $getStudents = "select * from studentImage where email not in (select studentEmail from studentRecruiterConnection where recruiterEmail='$loginEmail')";
-        $getRecruiters = "select * from recruiterImage where email not in (select recruiterEmail1 from recruiterRecruiterConnection where recruiterEmail2='$loginEmail'
+        $getRecruiters = "select * from recruiterImage where email != '{$loginEmail}' and email not in 
+                                                            (select recruiterEmail1 from recruiterRecruiterConnection where recruiterEmail2='$loginEmail'
                                                             union select recruiterEmail2 from recruiterRecruiterConnection where recruiterEmail1='$loginEmail')";
         $resultStudents = $db_connection->query($getStudents);
         $resultRecruiters = $db_connection->query($getRecruiters);
