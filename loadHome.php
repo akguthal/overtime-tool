@@ -106,7 +106,7 @@ INFO;
 CONTACT;
         } else {
             $contacts .= <<<CONTACT
-                <div class="row leftRow" onclick="clickConnection(this, 'left')">
+                <div class="row leftRow" onclick="clickConnection(this, 'left')" data-toggle="modal" data-target="#contactLeft">
                   <div class="col-sm-2">
                     <img class="leftProfile" src="{$src}" />
                   </div>
@@ -275,7 +275,7 @@ PEOPLE;
                   </div>
                   <div class="modal-body">
                     <h3 id = "contactLeftName"></h3>
-                    <p>Recruiter at <span id = "contactLeftCompany">Company</span></p>
+                    <p id = "contactLeftCompany"></p>
                     <p id = "contactLeftEmail" hidden></p>
                     <textarea id = "contactLeftMessage" type = "text" style = "width: 100%; height: 10%"></textarea>
                     <p><button type="button" class="btn btn-default" onClick="sendRecruiterEmail(this)">Send Email</button></p>
@@ -348,13 +348,13 @@ function connect(ths) {
     let ajax = new XMLHttpRequest();
     let name = $(ths).parent().parent().find("h3").text();
     let email = $(ths).parent().prev().text();
-    let url = "connectEmail.php?name=" + name + "&email=" + email;
+    let url = "connect.php?email=" + email;
     console.log(url);
     ajax.open("GET", url, true);
     ajax.onreadystatechange = function() {
         if (ajax.readyState === 4) {
             if (ajax.status === 200) {
-                alert("Connection request has been sent!");
+                alert("You are now connected!");
                 $("#contactRight").modal("hide");
             } else {
                alert("Connection failed.");
@@ -369,7 +369,6 @@ function sendRecruiterEmail(ths) {
     let name = $(ths).parent().parent().find("h3").text();
     let email = $(ths).parent().prev().text();
     let message = $("#contactLeftMessage").val();
-    alert(message);
     let url = "sendRecruiterEmail.php?name=" + name + "&email=" + email + "&message=" + message;
     ajax.open("GET", url, true);
     ajax.onreadystatechange = function() {

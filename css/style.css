@@ -1,6 +1,7 @@
 body{
   color: #FFFFFF;
   font-family: 'Lato', sans-serif;
+  background-color: #810E13;
 }
 
 h1, h2, h3{
@@ -49,7 +50,6 @@ p{
 #leftPanel{
   background-color: #810E13;
   height: 100%;
-  min-height: 100vh;
 }
 
 #leftHeader{

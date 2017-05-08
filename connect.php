@@ -11,7 +11,7 @@
     $currentEmail = $_SESSION['email'];
     $connectionEmail = $_GET['email'];
     $isStudent = $_SESSION['isStudent'];
-    
+
     if ($isStudent) {
         $query = "insert into studentRecruiterConnection(studentEmail, recruiterEmail) values('{$currentEmail}', '{$connectionEmail}')";
     } else {
@@ -20,12 +20,12 @@
         $result = $db_connection->query($query);
 
         if ($result->num_rows === 0) {
-            $query = "insert into recruiterRecruiterConnection(recruiterEmail1, recruiterEmail2) values('{$currentEmail}', '{$connectionEmail}')";    
+            $query = "insert into recruiterRecruiterConnection(recruiterEmail1, recruiterEmail2) values('{$currentEmail}', '{$connectionEmail}')";
         } else {
             $query = "insert into studentRecruiterConnection(studentEmail, recruiterEmail) values('{$connectionEmail}', '{$currentEmail}')";
         }
     }
-    
+
 
     if (!$db_connection->query($query))
         die("Retrieval failed: ". $db_connection->error);
@@ -34,7 +34,7 @@
     $result = $db_connection->query($query);
 
     if ($result->num_rows === 0) {
-        $query = "select * from recruiterImage where email={$connectionEmail}";    
+        $query = "select * from recruiterImage where email={$connectionEmail}";
         $result = $db_connection->query($query);
         $new = $result->fetch_assoc();
     } else {
