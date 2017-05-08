@@ -277,9 +277,8 @@ PEOPLE;
                     <h3 id = "contactLeftName"></h3>
                     <p>Recruiter at <span id = "contactLeftCompany">Company</span></p>
                     <p id = "contactLeftEmail" hidden></p>
-                    <p>Send an email:</p>
-                    <textarea type = "text" style = "width: 100%; height: 10%"></textarea>
-                    <button type="button" class="btn btn-default">Send Email</button>
+                    <textarea id = "contactLeftMessage" type = "text" style = "width: 100%; height: 10%"></textarea>
+                    <p><button type="button" class="btn btn-default" onClick="sendRecruiterEmail(this)">Send Email</button></p>
                   </div>
                   <div class="modal-footer redbg">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -349,16 +348,38 @@ function connect(ths) {
     let ajax = new XMLHttpRequest();
     let name = $(ths).parent().parent().find("h3").text();
     let email = $(ths).parent().prev().text();
-    let url = "email.php?name=" + name + "&email=" + email;
+    let url = "connectEmail.php?name=" + name + "&email=" + email;
     console.log(url);
     ajax.open("GET", url, true);
     ajax.onreadystatechange = function() {
         if (ajax.readyState === 4) {
             if (ajax.status === 200) {
-                console.log(ajax.responseText + "this is stupid");
-                alert(ajax.responseText);
+                alert("Connection request has been sent!");
+                $("#contactRight").modal("hide");
             } else {
-               alert("Request Failed.");
+               alert("Connection failed.");
+            }
+        }
+    };
+    ajax.send();
+}
+
+function sendRecruiterEmail(ths) {
+    let ajax = new XMLHttpRequest();
+    let name = $(ths).parent().parent().find("h3").text();
+    let email = $(ths).parent().prev().text();
+    let message = $("#contactLeftMessage").val();
+    alert(message);
+    let url = "sendRecruiterEmail.php?name=" + name + "&email=" + email + "&message=" + message;
+    ajax.open("GET", url, true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState === 4) {
+            if (ajax.status === 200) {
+                alert("Email message has been sent!");
+                $("#contactLeftMessage").val("");
+                $("#contactLeft").modal("hide");
+            } else {
+               alert("Connection failed.");
             }
         }
     };
