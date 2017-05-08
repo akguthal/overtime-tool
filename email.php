@@ -1,34 +1,11 @@
 <?php
+session_start();
 require 'C:\xampp\htdocs\PHPMailer_5.2.0\class.phpmailer.php';
-$body = <<< EOFDATA
-<script>
-function clickConnection(thing, side) {
-    let email = $(thing).find(".email").text();
-    let ajax = new XMLHttpRequest();
-    let url = "getUserData.php?email=" + email;
-    ajax.open("GET", url, true);
-    ajax.onreadystatechange = function() {
-        if (ajax.readyState === 4) {
-            if (ajax.status === 200) {
-                let results = ajax.responseText.split(",");
-                if (side == "right"){
-                    loadModalRight(results);
-                }
-                else{
-                    loadModalLeft(results);
-                }
-
-            } else {
-                alert("Request Failed.");
-            }
-        }
-    };
-    ajax.send(null);
-}
-</script>
-EOFDATA
-
-
+$to = "anthonypingelli@gmail.com";
+$name = $_GET['name'];
+$email = $_GET['email'];
+$from = $_SESSION['name'];
+/*
 $mail = new PHPMailer;
 
 $mail->isSMTP();                                      // Set mailer to use SMTP
@@ -40,13 +17,13 @@ $mail->SMTPSecure = 'tls';                            // Enable encryption, 'ssl
 
 $mail->From = 'overtimemailserver@gmail.com\'';
 $mail->FromName = 'Connection request';
-$mail->addAddress('{$Email}', 'Name');     // Add a recipient
+$mail->addAddress($email);     // Add a recipient
             // Name is optional
 // Set word wrap to 50 characters
 $mail->Port = 25;
 $mail->isHTML(true);                                  // Set email format to HTML
 
-$mail->Subject = 'Here is the subject';
+$mail->Subject = "Connect with {$email} on Overtime!";
 
 $body = file_get_contents('Login.php');
 $mail->MsgHTML($body);
@@ -58,6 +35,18 @@ if(!$mail->send()) {
     echo 'Mailer Error: ' . $mail->ErrorInfo;
 } else {
     echo 'Message has been sent';
-}
+}*/
 
+$url = "localhost/CMSC389N/overtime-tool/connect.php?email={$email}";
+
+$to = 'anthonypingelli@gmail.com';
+$subject = "Connect with {$from} on Overtime!";
+$message = "Hello {$name},\n\nUse the link below to connect with {$from} on Overtime!\n\n";
+$message .= "{$url}";
+$headers = "From: overtimemailserver@gmail.com\r\n";
+if (mail($to, $subject, $message, $headers)) {
+   echo "SUCCESS";
+} else {
+   echo "ERROR";
+}
 ?>

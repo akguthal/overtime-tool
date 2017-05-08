@@ -22,8 +22,11 @@
         $result = $db_connection->query($query);
         $current = $result->fetch_assoc();
         $queryConnections = "select * from studentImage where email in (select studentEmail from studentRecruiterConnection where recruiterEmail='$loginEmail')";
+        $queryConnectionsRecruiter = "select * from recruiterImage where email in (select recruiterEmail1 from recruiterRecruiterConnection where recruiterEmail2='$loginEmail'
+                                                            union select recruiterEmail2 from recruiterRecruiterConnection where recruiterEmail1='$loginEmail')";
     }
 
+    $_SESSION['name'] = $current['name'];
     $currentSrc = "data:image/jpeg;base64,".base64_encode($current['image']);
 
     $currentInfo = <<<INFO
@@ -76,6 +79,48 @@ CONTACT;
 CONTACT;
         }
     }
+
+    $resultConnectionsRecruiter = $db_connection->query($queryConnectionsRecruiter);
+    $num_rows = $resultConnectionsRecruiter->num_rows;
+
+    for ($row_index = 0; $row_index < $num_rows; $row_index++) {
+        $resultConnectionsRecruiter->data_seek($row_index);
+        $entry = $resultConnectionsRecruiter->fetch_array(MYSQLI_ASSOC);
+
+        if ($entry['image'] === null)
+            $src = "img/profile.png";
+        else
+            $src = "data:image/jpeg;base64,".base64_encode($entry['image']);
+
+        if ($isStudent) {  //////////////////change image
+            $contacts .= <<<CONTACT
+                <div class="row leftRow" onclick="clickConnection(this, 'left')" data-toggle="modal" data-target="#contactLeft">
+                  <div class="col-sm-2">
+                    <img class="leftProfile" src="{$src}" /> {$current['name']}
+                  </div>
+                  <div class="col-sm-9" onclick="clickConnection(this)">
+                    <h3>{$entry['name']}</h3>
+                    <p>{$entry['employer']}</p>
+                    <p hidden class="email">{$entry['email']}</p>
+                  </div>
+                </div>
+CONTACT;
+        } else {
+            $contacts .= <<<CONTACT
+                <div class="row leftRow" onclick="clickConnection(this, 'left')">
+                  <div class="col-sm-2">
+                    <img class="leftProfile" src="{$src}" />
+                  </div>
+                  <div class="col-sm-9" onclick="clickConnection(this)">
+                    <h3>{$entry['name']}</h3>
+                    <p>{$entry['school']}</p>
+                    <p hidden class="email">{$entry['email']}</p>
+                  </div>
+                </div>
+CONTACT;
+        }
+    }
+
     //SEARCH
 
     if ($isStudent) {
@@ -256,7 +301,8 @@ PEOPLE;
                     <p id = "contactRightField">Field</p>
                     <p id = "contactRightCollege">College Name</p>
                     <p id = "contactRightSport">Sport</p>
-                    <p><button type="button" class="btn btn-default" onClick="document.location.href='connect.php'">Connect</button></p>
+                    <p id = "contactRightEmail" hidden>Email</p>
+                    <p><button type="button" class="btn btn-default" onClick="connect(this)">Connect</button></p>
                   </div>
                   <div class="modal-footer bluebg">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -299,8 +345,29 @@ function clickConnection(thing, side) {
     ajax.send(null);
 }
 
+function connect(ths) {
+    let ajax = new XMLHttpRequest();
+    let name = $(ths).parent().parent().find("h3").text();
+    let email = $(ths).parent().prev().text(); 
+    let url = "email.php?name=" + name + "&email=" + email;
+    console.log(url);
+    ajax.open("GET", url, true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState === 4) {
+            if (ajax.status === 200) {
+                console.log(ajax.responseText + "this is stupid");
+                alert(ajax.responseText);
+            } else {
+               alert("Request Failed.");
+            }
+        }
+    };
+    ajax.send();
+}
+
 function loadModalRight(info){
   document.getElementById("contactRightName").innerHTML = info[0];
+  document.getElementById("contactRightEmail").innerHTML = info[1];
   document.getElementById("contactRightField").innerHTML = info[2];
   document.getElementById("contactRightCompany").innerHTML = info[3];
   document.getElementById("contactRightCollege").innerHTML = info[4];
